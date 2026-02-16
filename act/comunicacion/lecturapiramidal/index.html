@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Lectura Pro - Vista Previa 🚀</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background-color: #f1f5f9; 
+            margin: 0;
+            padding: 20px;
+        }
+
+        @page {
+    size: A4;
+    margin: 0;
+}
+
+
+
+
+
+        
+        /* Estilos de la Pirámide con Puntos */
+        .word-dot-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+        .dot {
+              width: 22px;
+    height: 22px;
+    background-color: #334155;
+    border-radius: 50%;
+    margin-top: 10px;
+        }
+
+        /* Estilo de la hoja en Vista Previa (Simulando PDF) */
+        .page-preview {
+            background: white;
+            width: 210mm; /* Ancho A4 aproximado */
+            min-height: 297mm;
+            margin: 0 auto 30px auto;
+            padding: 30px !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Borde decorativo interno */
+        .page-preview::after {
+            content: '';
+            position: absolute;
+            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 3px dashed #cbd5e1;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+
+        .side-watermark {
+    position: absolute;
+    left: 20px;
+    font-size: 14px;
+    color: rgba(0,0,0,0.15);
+    transform: rotate(90deg);
+    transform-origin: left top;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.random-footer {
+    position: absolute;
+    bottom: 50px;
+    font-size: 10px;
+    color: rgba(0,0,0,0.4);
+    pointer-events: none;
+    z-index: 1;
+}
+
+        .img-main {
+             width: 340px;
+    height: 260px;
+            object-fit: contain;
+            border: 3px solid #f1f5f9;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            z-index: 5;
+        }
+
+        .pyramid-line {
+             font-size: 36px;
+              margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 5;
+        }
+
+        .pyramid-line:hover { transform: scale(1.05); }
+        .pyramid-line.active { color: #0ea5e9; }
+        .pyramid-line.active .dot { background-color: #0ea5e9; }
+
+        /* CONFIGURACIÓN DE IMPRESIÓN REAL */
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none !important; }
+            .page-preview {
+                   width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    page-break-after: always;
+            }
+            .page-preview::after { border-color: #94a3b8; }
+            .dot { background-color: black !important; -webkit-print-color-adjust: exact; }
+        }
+
+        /* Input de Texto */
+        #jsonInput {
+            scrollbar-width: thin;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print max-w-5xl mx-auto bg-white p-8 rounded-3xl shadow-xl border-b-8 border-toy-blue mb-10">
+        <h2 class="text-3xl font-black mb-6 text-slate-800 flex items-center gap-3">
+            <i class="ph-fill ph-magic-wand text-toy-blue"></i> CONFIGURACIÓN
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <label class="block font-bold text-slate-700 flex items-center gap-2">
+                    <i class="ph-bold ph-code text-toy-blue"></i> 1. Pega tu Data JSON:
+                </label>
+                <textarea id="jsonInput" class="w-full h-48 p-4 border-2 border-slate-200 rounded-2xl font-mono text-sm focus:border-toy-blue outline-none bg-slate-50" placeholder='[
+  {
+    "oracion": "Bob Esponja come pan",
+    "pregunta": "¿Qué come Bob Esponja?"
+  }
+]'>[
+  {
+    "nombre": "Nivel 1: Aventuras de Bob Esponja",
+    "ejercicios": [
+      { "oracion": "Bob Esponja come pan", "pregunta": "¿Qué come Bob Esponja?" },
+      { "oracion": "Patricio salta muy alto", "pregunta": "¿Cómo salta Patricio?" },
+      { "oracion": "El caracol Gary duerme", "pregunta": "¿Qué hace Gary?" },
+      { "oracion": "Bob usa sus lentes", "pregunta": "¿Qué usa Bob?" },
+      { "oracion": "La piña es roja", "pregunta": "¿De qué color es la piña?" },
+      { "oracion": "Calamardo toca música hoy", "pregunta": "¿Qué toca Calamardo?" },
+      { "oracion": "Bob corre muy rápido", "pregunta": "¿Cómo corre Bob?" },
+      { "oracion": "El cangrejo ríe mucho", "pregunta": "¿Quién ríe mucho?" },
+      { "oracion": "Bob mira las flores", "pregunta": "¿Qué mira Bob?" },
+      { "oracion": "Arenita patina muy bien", "pregunta": "¿Qué hace Arenita?" },
+      { "oracion": "Bob limpia toda la casa", "pregunta": "¿Qué limpia Bob?" },
+      { "oracion": "El sol brilla mucho", "pregunta": "¿Qué brilla mucho?" },
+      { "oracion": "Bob juega al fútbol", "pregunta": "¿A qué juega Bob?" },
+      { "oracion": "Patricio usa una gorra", "pregunta": "¿Qué usa Patricio?" },
+      { "oracion": "La medusa vuela alto", "pregunta": "¿Quién vuela alto?" },
+      { "oracion": "Bob lee un cuento", "pregunta": "¿Qué lee Bob?" },
+      { "oracion": "El barco flota mucho", "pregunta": "¿Qué hace el barco?" },
+      { "oracion": "Bob pinta un cuadro", "pregunta": "¿Qué pinta Bob?" },
+      { "oracion": "Patricio come un helado", "pregunta": "¿Qué come Patricio?" },
+      { "oracion": "Bob dice hola siempre", "pregunta": "¿Qué dice Bob?" }
+    ]
+  }
+]
+</textarea>
+            </div>
+            
+            <div class="space-y-4">
+                <label class="block font-bold text-slate-700 flex items-center gap-2">
+                    <i class="ph-bold ph-file-zip text-toy-blue"></i> 2. Sube tus Imágenes (ZIP):
+                </label>
+                <div class="border-4 border-dashed border-slate-200 rounded-2xl p-10 text-center hover:bg-slate-50 transition-all relative group">
+                    <input type="file" id="zipInput" accept=".zip" class="absolute inset-0 opacity-0 cursor-pointer">
+                    <i class="ph-fill ph-folder-open text-5xl text-slate-300 group-hover:text-toy-blue transition-colors"></i>
+                    <p id="zipStatus" class="mt-4 font-semibold text-slate-500">Selecciona el archivo ZIP (img001.png...)</p>
+                </div>
+                
+
+                <div class="space-y-2">
+    <label class="block font-bold text-slate-700">
+        Nombre del PDF:
+    </label>
+    <input 
+        type="text" 
+        id="pdfName" 
+        value="Lectura Piramidal"
+        class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-blue-500 outline-none bg-slate-50"
+    >
+</div>
+
+
+                <button onclick="procesarYGenerar()" class="w-full bg-toy-blue hover:bg-blue-600 text-white font-black py-5 rounded-2xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3 text-xl">
+                    <i class="ph-bold ph-eye text-2xl"></i> GENERAR VISTA PREVIA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="printAction" class="no-print fixed bottom-10 right-10 z-50 hidden">
+       <button onclick="imprimirPDF()" class="bg-pink-500 hover:bg-pink-600 text-white w-20 h-20 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110">
+            <i class="ph-bold ph-printer text-4xl"></i>
+        </button>
+    </div>
+
+    <div id="output-container">
+        </div>
+
+    <script>
+        let imagenesCargadas = {};
+
+        // Manejador de ZIP
+        document.getElementById('zipInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const zip = new JSZip();
+            try {
+                const content = await zip.loadAsync(file);
+                imagenesCargadas = {};
+                
+                for (let filename in content.files) {
+                    if (filename.match(/\.(png|jpg|jpeg)$/i)) {
+                        const blob = await content.files[filename].async("blob");
+                        imagenesCargadas[filename.toLowerCase()] = URL.createObjectURL(blob);
+                    }
+                }
+                document.getElementById('zipStatus').innerText = "✅ " + Object.keys(imagenesCargadas).length + " imágenes listas";
+                document.getElementById('zipStatus').className = "mt-4 font-bold text-green-600";
+            } catch (err) {
+                alert("Error al procesar el archivo ZIP");
+            }
+        });
+
+        // Procesar y Generar Hojas
+        async function procesarYGenerar() {
+            const jsonText = document.getElementById('jsonInput').value;
+            const container = document.getElementById('output-container');
+            
+            if (!jsonText) return alert("Por favor pega la data JSON");
+
+            try {
+                const rawData = JSON.parse(jsonText);
+                // Si el JSON viene dentro de una lista con "ejercicios", lo extraemos
+                const ejercicios = Array.isArray(rawData) && rawData[0].ejercicios ? rawData[0].ejercicios : (Array.isArray(rawData) ? rawData : []);
+
+                container.innerHTML = '';
+
+                ejercicios.forEach((ej, index) => {
+                    const num = String(index + 1).padStart(3, '0');
+                    const imgKey = `img${num}.png`;
+                    const imgUrl = imagenesCargadas[imgKey] || imagenesCargadas[`img${num}.jpg`] || `https://placehold.co/400x300?text=img${num}.png`;
+
+                    const page = document.createElement('div');
+                    page.className = "page-preview";
+
+                    // 🔹 POSICIONES RANDOM SIN SALIRSE
+const randomY = Math.floor(Math.random() * 180) + 60; 
+const randomX = Math.floor(Math.random() * 350) + 60;
+
+                    const words = ej.oracion.split(' ');
+                    let accum = "";
+                    
+                    const pyramidHTML = words.map((word, i) => {
+                        accum += (i === 0 ? '' : ' ') + word;
+                        const wordsInLine = accum.split(' ');
+                        
+                        return `
+                            <div class="pyramid-line" onclick="hablar('${accum}', this)">
+                                ${wordsInLine.map(w => `
+                                    <div class="word-dot-container">
+                                        <span class="font-bold uppercase">${w}</span>
+                                        <div class="dot"></div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }).join('');
+
+                    page.innerHTML = `
+   
+                    <div class="side-watermark" style="top:${randomY}px;">
+    FB: SUPER CURSOS TELGAM
+</div>
+
+<div class="random-footer" style="left:${randomX}px;">
+    FB: SUPER CURSOS TELGAM   www.narrion.site
+</div>
+                       
+                        <img src="${imgUrl}" class="img-main" alt="Ejercicio ${num}">
+
+<div class="flex flex-col justify-center items-center w-full z-10">                            ${pyramidHTML}
+                        </div>
+
+                        <div class="w-full pt-4 border-t-2 border-dotted border-slate-200 z-10">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg">?</div>
+                                <h3 class="text-2xl font-bold text-slate-800">${ej.pregunta}</h3>
+                            </div>
+                            <div class="w-full h-16 border-b-4 border-slate-800 relative bg-slate-50/50">
+                                <div class="absolute top-1/2 w-full border-t-2 border-dashed border-slate-300"></div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(page);
+                });
+
+                document.getElementById('printAction').classList.remove('hidden');
+                window.scrollTo({ top: container.offsetTop - 50, behavior: 'smooth' });
+
+            } catch (e) {
+                alert("Error en el formato del JSON. Verifica que sea correcto.");
+                console.error(e);
+            }
+        }
+
+        function hablar(texto, el) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(texto);
+            u.lang = 'es-MX';
+            u.rate = 0.8;
+            
+            document.querySelectorAll('.pyramid-line').forEach(l => l.classList.remove('active'));
+            el.classList.add('active');
+
+            window.speechSynthesis.speak(u);
+            
+            // Si es la última frase, confeti
+            if (!el.nextElementSibling) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+            }
+        }
+
+        function imprimirPDF() {
+    const nombre = document.getElementById("pdfName").value.trim() || "Lectura Piramidal";
+
+    // Cambiar título del documento (esto define el nombre del PDF)
+    document.title = nombre;
+
+    window.print();
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dino Aventuras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="exportarpdf.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Fredoka', 'sans-serif'], },
+                    colors: {
+                        'gum-blue': '#38bdf8', 'gum-pink': '#f472b6',
+                        'gum-yellow': '#facc15', 'gum-purple': '#c084fc', 'gum-green': '#4ade80',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #e0f2fe;
+            background-image: radial-gradient(#7dd3fc 15%, transparent 16%), radial-gradient(#f0f9ff 15%, transparent 16%);
+            background-size: 60px 60px; background-position: 0 0, 30px 30px;
+            font-family: 'Fredoka', sans-serif; overflow: hidden; touch-action: manipulation;
+        }
+        .toy-frame {
+            background: #ffffff; border-radius: 2rem; border: 8px solid #60a5fa;
+            box-shadow: 0 0 0 10px #bfdbfe, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+        }
+        .btn-gum {
+            border: none; border-radius: 1.5rem; color: white; font-weight: 700;
+            text-transform: uppercase; position: relative;
+            transition: all 0.1s; box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+        }
+        .btn-gum:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+        .bg-g-purple { background: linear-gradient(180deg, #d8b4fe 0%, #a855f7 100%); box-shadow: 0 6px 0 #7e22ce; }
+        .bg-g-green  { background: linear-gradient(180deg, #86efac 0%, #22c55e 100%); box-shadow: 0 6px 0 #15803d; }
+        .bg-g-blue   { background: linear-gradient(180deg, #7dd3fc 0%, #0ea5e9 100%); box-shadow: 0 6px 0 #0284c7; }
+        .bg-g-pink   { background: linear-gradient(180deg, #f9a8d4 0%, #db2777 100%); box-shadow: 0 6px 0 #be185d; }
+        .paper-bg {
+            background-color: #fffbeb; background-image: linear-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 100% 2rem; line-height: 2rem;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="h-screen w-screen flex items-center justify-center sm:p-4">
+
+    <main class="w-full max-w-lg md:max-w-2xl lg:max-w-3xl h-full sm:h-[90vh] toy-frame bg-white overflow-x-hidden">
+        
+        <section id="menu-view" class="flex flex-col h-full pt-12 px-5 pb-6 bg-gradient-to-b from-sky-50 to-white">
+            <header class="text-center mb-4">
+                <div class="inline-block p-4 bg-yellow-100 rounded-full mb-2 border-4 border-white shadow-lg">
+                    <span class="text-4xl">📚</span>
+                </div>
+                <h1 class="text-3xl font-black text-slate-700 pb-2">Panel de Historias</h1>
+                
+                <details class="mb-4 bg-white border-2 border-slate-200 rounded-xl shadow-sm text-left group">
+                    <summary class="p-3 font-bold text-slate-500 cursor-pointer list-none flex justify-between items-center bg-slate-50 rounded-xl">
+                        <span>⚙️ Configurar Datos, Imágenes y PDF</span>
+                        <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded">ZIP + TXT</span>
+                    </summary>
+                    <div class="p-4 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1 uppercase">1. Pegar texto (Data del .txt)</label>
+                            <textarea id="input-json" class="w-full h-24 p-2 text-xs border-2 border-slate-200 rounded-lg outline-none resize-none font-mono" placeholder='{ "stories": [ ... ] }'>{
+  "type": "reading_comprehension_game",
+  "level": "kids",
+  "favorite_character": "Peppa Pig",
+  "stories": [
+    {
+      "id": 1,
+      "separator": "---STORY---",
+      "title": "Peppa y el charco de lodo",
+      "image": "img001",
+      "image_prompt": "Peppa Pig jumping in a muddy puddle with rain boots, happy expression, bright colorful children book illustration style",
+      "text": [
+        "Peppa salió después de la lluvia.",
+        "Encontró un gran charco de lodo en el jardín.",
+        "Peppa saltó dentro del charco con mucha alegría.",
+        "George también quiso saltar con ella.",
+        "Peppa aprendió que saltar en charcos es más divertido en compañía."
+      ],
+      "activities": [
+        {
+          "icon": "💦",
+          "question": "¿Qué encontró Peppa?",
+          "options": ["Un árbol", "Un charco de lodo", "Una pelota"],
+          "answer": 1,
+          "keywords": ["charco de lodo"]
+        },
+        {
+          "icon": "👢",
+          "question": "¿Qué hizo Peppa?",
+          "options": ["Saltó", "Durmió", "Corrió a casa"],
+          "answer": 0,
+          "keywords": ["saltó"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "separator": "---STORY---",
+      "title": "Peppa en la escuela",
+      "image": "img002",
+      "image_prompt": "Peppa Pig in a classroom with friends and a teacher, colorful classroom, cheerful children illustration",
+      "text": [
+        "Peppa fue a la escuela muy contenta.",
+        "La maestra les enseñó una nueva canción.",
+        "Peppa cantó junto a sus amigos.",
+        "Después dibujaron animales en sus cuadernos.",
+        "Peppa aprendió que la escuela es un lugar para aprender y divertirse."
+      ],
+      "activities": [
+        {
+          "icon": "🏫",
+          "question": "¿A dónde fue Peppa?",
+          "options": ["Al parque", "A la escuela", "A la playa"],
+          "answer": 1,
+          "keywords": ["fue a la escuela"]
+        },
+        {
+          "icon": "🎵",
+          "question": "¿Qué aprendieron?",
+          "options": ["Una canción", "Un juego nuevo", "Una receta"],
+          "answer": 0,
+          "keywords": ["nueva canción"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "separator": "---STORY---",
+      "title": "Peppa y George juegan",
+      "image": "img003",
+      "image_prompt": "Peppa Pig and George playing with toys in a colorful room, happy scene, children illustration style",
+      "text": [
+        "Peppa y George estaban en su habitación.",
+        "George jugaba con su dinosaurio favorito.",
+        "Peppa organizó una pequeña fiesta de juguetes.",
+        "Los dos rieron mucho mientras jugaban.",
+        "Peppa aprendió que compartir juguetes hace más feliz a George."
+      ],
+      "activities": [
+        {
+          "icon": "🦖",
+          "question": "¿Con qué jugaba George?",
+          "options": ["Un coche", "Un dinosaurio", "Una pelota"],
+          "answer": 1,
+          "keywords": ["dinosaurio"]
+        },
+        {
+          "icon": "😊",
+          "question": "¿Cómo se sentían?",
+          "options": ["Tristes", "Felices", "Enojados"],
+          "answer": 1,
+          "keywords": ["rieron mucho"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "separator": "---STORY---",
+      "title": "Peppa en el parque",
+      "image": "img004",
+      "image_prompt": "Peppa Pig playing on a swing in a sunny park with friends, bright cheerful children illustration",
+      "text": [
+        "Peppa fue al parque con su familia.",
+        "Se subió al columpio y se balanceó alto.",
+        "George jugó en el tobogán.",
+        "Mamá Pig y Papá Pig miraban sonrientes.",
+        "Peppa aprendió que jugar al aire libre es muy saludable."
+      ],
+      "activities": [
+        {
+          "icon": "🌳",
+          "question": "¿Dónde jugaba Peppa?",
+          "options": ["En el parque", "En la cocina", "En la escuela"],
+          "answer": 0,
+          "keywords": ["parque"]
+        },
+        {
+          "icon": "🎠",
+          "question": "¿En qué se subió Peppa?",
+          "options": ["En una bicicleta", "En el columpio", "En un auto"],
+          "answer": 1,
+          "keywords": ["columpio"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "separator": "---STORY---",
+      "title": "Peppa ayuda en casa",
+      "image": "img005",
+      "image_prompt": "Peppa Pig helping Mommy Pig in the kitchen, warm colorful children illustration",
+      "text": [
+        "Mamá Pig estaba preparando la cena.",
+        "Peppa quiso ayudar a poner la mesa.",
+        "Colocó los platos y los vasos con cuidado.",
+        "George llevó las servilletas.",
+        "Peppa aprendió que ayudar en casa es importante."
+      ],
+      "activities": [
+        {
+          "icon": "🍽️",
+          "question": "¿Qué hizo Peppa?",
+          "options": ["Jugó", "Puso la mesa", "Durmió"],
+          "answer": 1,
+          "keywords": ["puso la mesa"]
+        },
+        {
+          "icon": "🏠",
+          "question": "¿Quién preparaba la cena?",
+          "options": ["Papá Pig", "Mamá Pig", "George"],
+          "answer": 1,
+          "keywords": ["mamá pig"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "separator": "---STORY---",
+      "title": "Peppa y la bicicleta",
+      "image": "img006",
+      "image_prompt": "Peppa Pig riding a small bicycle with helmet in a sunny street, bright children book illustration",
+      "text": [
+        "Peppa recibió una bicicleta nueva.",
+        "Papá Pig le enseñó a mantener el equilibrio.",
+        "Al principio fue difícil.",
+        "Después de practicar, Peppa logró avanzar sola.",
+        "Peppa aprendió que practicar ayuda a mejorar."
+      ],
+      "activities": [
+        {
+          "icon": "🚲",
+          "question": "¿Qué recibió Peppa?",
+          "options": ["Una bicicleta", "Un libro", "Un muñeco"],
+          "answer": 0,
+          "keywords": ["bicicleta"]
+        },
+        {
+          "icon": "⭐",
+          "question": "¿Qué la ayudó a mejorar?",
+          "options": ["Dormir", "Practicar", "Cantar"],
+          "answer": 1,
+          "keywords": ["practicar"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "separator": "---STORY---",
+      "title": "Peppa en la playa",
+      "image": "img007",
+      "image_prompt": "Peppa Pig building a sandcastle at the beach with family, sunny happy children illustration",
+      "text": [
+        "Peppa fue a la playa con su familia.",
+        "Construyó un castillo de arena.",
+        "George decoró el castillo con conchas.",
+        "Las olas sonaban suavemente.",
+        "Peppa aprendió que la playa es un lugar divertido para explorar."
+      ],
+      "activities": [
+        {
+          "icon": "🏖️",
+          "question": "¿Qué construyó Peppa?",
+          "options": ["Una casa", "Un castillo de arena", "Un barco"],
+          "answer": 1,
+          "keywords": ["castillo de arena"]
+        },
+        {
+          "icon": "🐚",
+          "question": "¿Qué usó George?",
+          "options": ["Conchas", "Piedras", "Hojas"],
+          "answer": 0,
+          "keywords": ["conchas"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "separator": "---STORY---",
+      "title": "Peppa y el dibujo",
+      "image": "img008",
+      "image_prompt": "Peppa Pig drawing with crayons at a table, colorful art scene, children book illustration",
+      "text": [
+        "Peppa tomó sus colores favoritos.",
+        "Dibujó a su familia bajo un arcoíris.",
+        "George pintó un gran dinosaurio verde.",
+        "Mamá Pig colgó los dibujos en la pared.",
+        "Peppa aprendió que el arte muestra nuestra imaginación."
+      ],
+      "activities": [
+        {
+          "icon": "🎨",
+          "question": "¿Qué dibujó Peppa?",
+          "options": ["Un arcoíris con su familia", "Una montaña", "Un auto"],
+          "answer": 0,
+          "keywords": ["arcoíris"]
+        },
+        {
+          "icon": "🦕",
+          "question": "¿Qué pintó George?",
+          "options": ["Un dinosaurio", "Un perro", "Un pez"],
+          "answer": 0,
+          "keywords": ["dinosaurio"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "separator": "---STORY---",
+      "title": "Peppa ordena su habitación",
+      "image": "img009",
+      "image_prompt": "Peppa Pig cleaning her colorful bedroom, tidy and cheerful children illustration",
+      "text": [
+        "La habitación de Peppa estaba desordenada.",
+        "Guardó sus juguetes en cajas.",
+        "Colocó sus libros en el estante.",
+        "George ayudó con los bloques.",
+        "Peppa aprendió que ordenar facilita encontrar las cosas."
+      ],
+      "activities": [
+        {
+          "icon": "🧸",
+          "question": "¿Qué guardó Peppa?",
+          "options": ["Zapatos", "Juguetes", "Comida"],
+          "answer": 1,
+          "keywords": ["juguetes"]
+        },
+        {
+          "icon": "📚",
+          "question": "¿Dónde puso los libros?",
+          "options": ["En el estante", "En el piso", "En la cocina"],
+          "answer": 0,
+          "keywords": ["estante"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "separator": "---STORY---",
+      "title": "Peppa antes de dormir",
+      "image": "img010",
+      "image_prompt": "Peppa Pig in pajamas going to bed with a night lamp and stars, soft warm children illustration",
+      "text": [
+        "Peppa se puso su pijama rosa.",
+        "Mamá Pig le leyó un cuento.",
+        "George escuchaba atento.",
+        "Peppa cerró los ojos y sonrió.",
+        "Peppa aprendió que una rutina ayuda a descansar mejor."
+      ],
+      "activities": [
+        {
+          "icon": "🛏️",
+          "question": "¿Qué le leyó Mamá Pig?",
+          "options": ["Una receta", "Un cuento", "Una carta"],
+          "answer": 1,
+          "keywords": ["cuento"]
+        },
+        {
+          "icon": "🌙",
+          "question": "¿Cómo terminó Peppa?",
+          "options": ["Corriendo", "Sonriendo", "Saltando"],
+          "answer": 1,
+          "keywords": ["sonrió"]
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1 uppercase">2. Cargar ZIP de Imágenes</label>
+                            <div class="relative border-2 border-dashed border-slate-300 rounded-lg p-3 text-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                                <input type="file" id="input-zip" accept=".zip" class="absolute inset-0 opacity-0 cursor-pointer">
+                                <div class="text-xl">🖼️</div>
+                                <p id="zip-name" class="text-[10px] text-slate-500 font-bold">Selecciona tu archivo .zip</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1 uppercase">3. Nombre del archivo PDF</label>
+                            <input type="text" id="pdf-filename" 
+                                   class="w-full p-2 text-sm border-2 border-slate-200 rounded-lg focus:border-blue-400 outline-none font-bold text-slate-600" 
+                                   value="Comprension Lectora" 
+                                   placeholder="Ej: Historias del Bosque">
+                        </div>
+
+                        <button onclick="cargarTodo()" class="w-full btn-gum bg-g-green py-3 text-sm border-2 border-white shadow-md">
+                            ✅ Sincronizar y Cargar
+                        </button>
+                    </div>
+                </details>
+
+                <div class="flex gap-2 justify-center">
+                   <button onclick="botonExportarClick()" class="px-6 py-2 bg-slate-700 text-white rounded-full font-bold shadow-lg hover:bg-slate-600 transition-colors flex items-center gap-2">
+                       🖨️ Generar PDF Completo
+                   </button>
+                </div>
+            </header>
+            
+            <div id="story-list" class="flex-grow overflow-y-auto space-y-4 px-1 pb-4 scrollbar-hide text-center text-slate-400 pt-10">
+                Pega tus datos arriba para comenzar...
+            </div>
+        </section>
+
+        <section id="reading-view" class="hidden flex-col h-full pt-10 px-4 pb-4 bg-sky-50 relative">
+            <div class="flex items-center gap-3 mb-4 shrink-0">
+                <button onclick="showMenu()" class="btn-gum bg-g-pink w-12 h-12 flex items-center justify-center text-2xl border-2 border-white rounded-full">🏠</button>
+                <div class="flex-1 bg-white rounded-xl px-4 py-2 border-b-4 border-slate-100 shadow-sm flex items-center justify-center">
+                    <h2 id="view-title" class="font-bold text-blue-600 text-lg text-center leading-tight">...</h2>
+                </div>
+            </div>
+            <div class="shrink-0 mb-4 px-2 flex justify-center">
+                <div class="rounded-2xl border-4 border-white shadow-md overflow-hidden h-40 sm:h-56 w-full max-w-[16rem] bg-sky-100">
+                    <img id="story-img" src="" alt="Cuento" class="object-contain h-full w-full">
+                </div>
+            </div>
+            <div class="flex-grow overflow-y-auto mb-4 px-1 rounded-xl">
+                <div id="story-content" class="paper-bg p-4 rounded-xl border-2 border-yellow-200 shadow-inner min-h-full"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 shrink-0 pb-2">
+                <button onclick="speakStory()" class="btn-gum bg-g-blue py-3 text-lg border-2 border-white">🔊 Escuchar</button>
+                <button onclick="goToActivity()" class="btn-gum bg-g-green py-3 text-lg border-2 border-white">🎮 Jugar</button>
+            </div>
+        </section>
+
+        <section id="activity-view" class="hidden flex-col h-full pt-10 px-5 pb-6 bg-yellow-50 relative">
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="goToReading()" class="btn-gum bg-white !text-slate-400 border-2 border-slate-200 w-10 h-10 flex items-center justify-center">✕</button>
+                <div id="progress-dots" class="flex gap-2"></div>
+            </div>
+            <div id="quiz-container" class="flex-grow flex flex-col justify-center">
+                <div id="question-box">
+                    <div class="bg-white rounded-3xl p-6 mb-6 text-center shadow-md border-2 border-slate-100">
+                        <div id="q-icon" class="text-5xl mb-4">❓</div>
+                        <h3 id="q-text" class="text-2xl font-black text-slate-700 leading-tight">...</h3>
+                    </div>
+                    <div id="options-grid" class="flex flex-col gap-3"></div>
+                </div>
+                <div id="win-screen" class="hidden text-center flex-col items-center justify-center h-full">
+                    <div class="text-8xl mb-2">🏆</div>
+                    <h2 class="text-4xl font-black text-orange-500 mb-8">¡EXCELENTE!</h2>
+                    <button onclick="showMenu()" class="w-full btn-gum bg-g-purple py-4 text-xl border-2 border-white">Siguiente Historia</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let gameData = null;
+        let currentStory = null;
+        let currentIdx = 0;
+
+        document.getElementById('input-zip').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Selecciona tu archivo .zip";
+            document.getElementById('zip-name').innerText = "✅ " + fileName;
+        });
+
+        async function cargarTodo() {
+            const jsonText = document.getElementById('input-json').value.trim();
+            const zipInput = document.getElementById('input-zip');
+
+            if (!jsonText) return alert("Por favor, pega el contenido del archivo de texto.");
+            if (!zipInput.files[0]) return alert("Por favor, selecciona el archivo .zip de imágenes.");
+
+            try {
+                const parsedData = JSON.parse(jsonText);
+                const jszip = new JSZip();
+                const zipContents = await jszip.loadAsync(zipInput.files[0]);
+                
+                for (let story of parsedData.stories) {
+                    const fileNameInZip = Object.keys(zipContents.files).find(name => 
+                        name.toLowerCase().startsWith(story.image.toLowerCase())
+                    );
+                    if (fileNameInZip) {
+                        const fileData = await zipContents.file(fileNameInZip).async("base64");
+                        const ext = fileNameInZip.split('.').pop();
+                        story.image = `data:image/${ext};base64,${fileData}`;
+                    }
+                }
+
+                gameData = parsedData;
+                renderMenu();
+                alert("¡Datos cargados con éxito!");
+                document.querySelector('details').removeAttribute('open');
+            } catch (e) {
+                alert("Error en la carga. Verifica el JSON y el ZIP.");
+            }
+        }
+
+        function renderMenu() {
+            const list = document.getElementById('story-list');
+            list.innerHTML = '';
+            gameData.stories.forEach((story) => {
+                const item = document.createElement('div');
+                item.className = "story-card bg-white border-4 border-slate-50 rounded-2xl p-4 flex items-center gap-4 cursor-pointer shadow-md mb-4 hover:border-blue-300 transition-all";
+                item.onclick = () => selectStory(story);
+                const icon = story.activities[0]?.icon || '📖';
+                item.innerHTML = `
+                    <div class="bg-blue-100 w-16 h-16 rounded-xl flex items-center justify-center text-3xl shrink-0">${icon}</div>
+                    <div class="flex-1 text-left"><h3 class="font-black text-slate-700 text-lg leading-tight">${story.title}</h3></div>
+                    <div class="text-slate-300 text-xl">➔</div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function selectStory(story) {
+            currentStory = story;
+            currentIdx = 0;
+            document.getElementById('view-title').innerText = story.title;
+            document.getElementById('story-img').src = story.image;
+            const contentDiv = document.getElementById('story-content');
+            contentDiv.innerHTML = story.text.map(p => `<p class="mb-4 text-slate-700 text-xl font-medium">${p}</p>`).join('');
+            switchView('menu-view', 'reading-view');
+        }
+
+        function loadQuestion() {
+            const act = currentStory.activities[currentIdx];
+            document.getElementById('q-text').innerText = act.question;
+            document.getElementById('q-icon').innerText = act.icon;
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            act.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = `btn-gum bg-g-blue w-full py-4 text-lg rounded-2xl border-2 border-white/30`;
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if(i === act.answer) {
+                        btn.classList.replace('bg-g-blue', 'bg-g-green');
+                        setTimeout(() => {
+                            currentIdx++;
+                            if (currentIdx < currentStory.activities.length) loadQuestion();
+                            else showWin();
+                        }, 800);
+                    } else { btn.style.opacity = '0.4'; }
+                };
+                grid.appendChild(btn);
+            });
+            updateDots();
+        }
+
+        function switchView(h, s) { document.getElementById(h).classList.add('hidden'); document.getElementById(s).classList.remove('hidden'); }
+        function showMenu() { switchView('reading-view', 'menu-view'); switchView('activity-view', 'menu-view'); }
+        function goToActivity() { switchView('reading-view', 'activity-view'); document.getElementById('question-box').classList.remove('hidden'); document.getElementById('win-screen').classList.add('hidden'); loadQuestion(); }
+        function goToReading() { switchView('activity-view', 'reading-view'); }
+        function showWin() { document.getElementById('question-box').classList.add('hidden'); document.getElementById('win-screen').classList.remove('hidden'); document.getElementById('win-screen').classList.add('flex'); }
+        function updateDots() {
+            const cont = document.getElementById('progress-dots');
+            cont.innerHTML = currentStory.activities.map((_, i) => `<div class="h-3 w-3 rounded-full ${i <= currentIdx ? 'bg-green-500' : 'bg-slate-200'}"></div>`).join('');
+        }
+        function speakStory() { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(currentStory.text.join(' '))); }
+
+        async function botonExportarClick() {
+            if(!gameData) return alert("Carga los datos primero.");
+            const btn = document.querySelector('button[onclick="botonExportarClick()"]');
+            const customName = document.getElementById('pdf-filename').value.trim() || "Comprension Lectora";
+            
+            btn.innerText = "⏳ Generando...";
+            btn.disabled = true;
+            
+            // Pasamos el nombre personalizado a la función del exportarpdf.js
+            await generarPDF(gameData, customName);
+            
+            btn.innerText = "🖨️ Generar PDF Completo";
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

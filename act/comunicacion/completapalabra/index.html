@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador Pro - Marca de Agua</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="exportar_pdf.js"></script>
+    <style>
+        body { background: #f8fafc; font-family: sans-serif; }
+        .card-active { border: 4px solid #38bdf8; background: white; transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .card-locked { opacity: 0.4; pointer-events: none; filter: grayscale(1); }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-5xl mx-auto">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl mb-10 border border-slate-100">
+            <h1 class="text-3xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                <span class="bg-sky-500 text-white p-2 rounded-lg"><i class="ph-bold ph-pencil-circle"></i></span>
+                Configuración del Cuadernillo
+            </h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <label class="font-bold text-slate-600 block">1. Datos de los niveles (JSON):</label>
+                    <textarea id="json-input" class="w-full h-48 p-4 border-2 border-slate-200 rounded-2xl font-mono text-xs focus:border-sky-400 outline-none transition-all" placeholder='[{"nombre":"Nivel 1", "ejercicios":[{"palabra":"CASA"}]}]'>[
+  {
+    "id": 1,
+    "nombre": "Nivel 1: Animales de la Selva",
+    "ejercicios": [
+      {"image":"img001","image_prompt":"friendlylioncartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LEON","descripcion":"El rey de la selva con melena"},
+      {"image":"img002","image_prompt":"cutemonkeyhangingforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MONO","descripcion":"Le gusta comer bananas"},
+      {"image":"img003","image_prompt":"happyelephantcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"ELEFANTE","descripcion":"Animal muy grande con trompa"},
+      {"image":"img004","image_prompt":"tallgiraffecartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"JIRAFA","descripcion":"Tiene el cuello muy largo"},
+      {"image":"img005","image_prompt":"cutetigercartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"TIGRE","descripcion":"Gran gato con rayas"},
+      {"image":"img006","image_prompt":"friendlyhippoincartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"HIPOPOTAMO","descripcion":"Le gusta estar en el agua"},
+      {"image":"img007","image_prompt":"cutepythoncartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"SERPIENTE","descripcion":"Se arrastra por el suelo"},
+      {"image":"img008","image_prompt":"friendlypumacartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PUMA","descripcion":"Felino rápido de la montaña"}
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Nivel 2: Frutas Dulces",
+    "ejercicios": [
+      {"image":"img009","image_prompt":"applefruitforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MANZANA","descripcion":"Fruta roja y muy sana"},
+      {"image":"img010","image_prompt":"bananabunchforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PLATANO","descripcion":"Fruta amarilla y larga"},
+      {"image":"img011","image_prompt":"sweetpearforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PERA","descripcion":"Fruta verde con forma de campana"},
+      {"image":"img012","image_prompt":"bunchofgrapesforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"UVA","descripcion":"Bolitas pequeñas y dulces"},
+      {"image":"img013","image_prompt":"roundorangefruitforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"NARANJA","descripcion":"Tiene mucha vitamina C"},
+      {"image":"img014","image_prompt":"strawberrycartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"FRESA","descripcion":"Fruta roja con puntitos"},
+      {"image":"img015","image_prompt":"pineapplecartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PIÑA","descripcion":"Fruta con corona de hojas"},
+      {"image":"img016","image_prompt":"watermelonsliceforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"SANDIA","descripcion":"Verde por fuera, roja por dentro"}
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Nivel 3: Medios de Transporte",
+    "ejercicios": [
+      {"image":"img017","image_prompt":"simplecarcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CARRO","descripcion":"Tiene cuatro ruedas"},
+      {"image":"img018","image_prompt":"bicycleforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BICI","descripcion":"Se mueve con pedales"},
+      {"image":"img019","image_prompt":"schoolbusforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BUS","descripcion":"Lleva a los niños al colegio"},
+      {"image":"img020","image_prompt":"airplaneforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"AVION","descripcion":"Vuela muy alto por las nubes"},
+      {"image":"img021","image_prompt":"simpleboatforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BARCO","descripcion":"Flota sobre el agua"},
+      {"image":"img022","image_prompt":"motorcycleforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MOTO","descripcion":"Vehículo de dos ruedas rápido"},
+      {"image":"img023","image_prompt":"trainlocomotiveforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"TREN","descripcion":"Viaja sobre rieles de hierro"},
+      {"image":"img024","image_prompt":"rocketshipforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"COHETE","descripcion":"Viaja fuera de la tierra"}
+    ]
+  },
+  {
+    "id": 4,
+    "nombre": "Nivel 4: Objetos de la Casa",
+    "ejercicios": [
+      {"image":"img025","image_prompt":"simplebedforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CAMA","descripcion":"Donde dormimos de noche"},
+      {"image":"img026","image_prompt":"simpletableforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MESA","descripcion":"Donde ponemos los platos"},
+      {"image":"img027","image_prompt":"simplechairforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"SILLA","descripcion":"Sirve para sentarse"},
+      {"image":"img028","image_prompt":"simplelampforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LAMPARA","descripcion":"Nos da luz para leer"},
+      {"image":"img029","image_prompt":"simpledoorforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PUERTA","descripcion":"Para entrar y salir de un cuarto"},
+      {"image":"img030","image_prompt":"simplewindowforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"VENTANA","descripcion":"Para mirar hacia afuera"},
+      {"image":"img031","image_prompt":"simpleclockforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"RELOJ","descripcion":"Nos dice qué hora es"},
+      {"image":"img032","image_prompt":"simplefridgeforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"RADIO","descripcion":"Para escuchar música y noticias"}
+    ]
+  },
+  {
+    "id": 5,
+    "nombre": "Nivel 5: Útiles Escolares",
+    "ejercicios": [
+      {"image":"img033","image_prompt":"pencilcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LAPIZ","descripcion":"Para escribir y dibujar"},
+      {"image":"img034","image_prompt":"bookcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LIBRO","descripcion":"Tiene muchas historias y dibujos"},
+      {"image":"img035","image_prompt":"backpackforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MOCHILA","descripcion":"Para cargar los cuadernos"},
+      {"image":"img036","image_prompt":"scissorsforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"TIJERA","descripcion":"Sirve para cortar papel"},
+      {"image":"img037","image_prompt":"eraserforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BORRADOR","descripcion":"Para borrar si nos equivocamos"},
+      {"image":"img038","image_prompt":"rulerforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"REGLA","descripcion":"Para hacer líneas derechitas"},
+      {"image":"img039","image_prompt":"notebookforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CUADERNO","descripcion":"Donde hacemos la tarea"},
+      {"image":"img040","image_prompt":"gluebottleforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"GOMA","descripcion":"Para pegar papeles"}
+    ]
+  },
+  {
+    "id": 6,
+    "nombre": "Nivel 6: El Cuerpo Humano",
+    "ejercicios": [
+      {"image":"img041","image_prompt":"humaneyeforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"OJO","descripcion":"Sirve para ver todo"},
+      {"image":"img042","image_prompt":"humannoseforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"NARIZ","descripcion":"Para oler flores y comida"},
+      {"image":"img043","image_prompt":"humanhandforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MANO","descripcion":"Tiene cinco dedos"},
+      {"image":"img044","image_prompt":"humanfootforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PIE","descripcion":"Lo usamos para caminar"},
+      {"image":"img045","image_prompt":"humanearforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"OREJA","descripcion":"Para escuchar música"},
+      {"image":"img046","image_prompt":"humanmouthforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BOCA","descripcion":"Para comer y hablar"},
+      {"image":"img047","image_prompt":"humanhairforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PELO","descripcion":"Está arriba de nuestra cabeza"},
+      {"image":"img048","image_prompt":"humanarmforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"BRAZO","descripcion":"Para dar abrazos fuertes"}
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "Nivel 7: La Naturaleza",
+    "ejercicios": [
+      {"image":"img049","image_prompt":"brightsuncartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"SOL","descripcion":"Nos da luz y calor"},
+      {"image":"img050","image_prompt":"moonandstarsforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LUNA","descripcion":"Sale por la noche"},
+      {"image":"img051","image_prompt":"cloudcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"NUBE","descripcion":"Parecen algodón en el cielo"},
+      {"image":"img052","image_prompt":"prettyflowerforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"FLOR","descripcion":"Huelen muy bien"},
+      {"image":"img053","image_prompt":"bigtreeforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"ARBOL","descripcion":"Tiene tronco y hojas verdes"},
+      {"image":"img054","image_prompt":"mountainforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MONTAÑA","descripcion":"Es muy alta y de tierra"},
+      {"image":"img055","image_prompt":"rivercartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"RIO","descripcion":"Agua que corre sin parar"},
+      {"image":"img056","image_prompt":"rainbowforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"ARCOIRIS","descripcion":"Tiene siete colores lindos"}
+    ]
+  },
+  {
+    "id": 8,
+    "nombre": "Nivel 8: El Clima",
+    "ejercicios": [
+      {"image":"img057","image_prompt":"rainydaycartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"LLUVIA","descripcion":"Agua que cae del cielo"},
+      {"image":"img058","image_prompt":"snowflakesforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"NIEVE","descripcion":"Es blanca y muy fría"},
+      {"image":"img059","image_prompt":"windblowingcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"VIENTO","descripcion":"Aire que sopla fuerte"},
+      {"image":"img060","image_prompt":"lightningboltforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"RAYO","descripcion":"Luz fuerte en la tormenta"},
+      {"image":"img061","image_prompt":"umbrellaopenedforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PARAGUAS","descripcion":"Para no mojarnos"},
+      {"image":"img062","image_prompt":"snowmanforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MUÑECO","descripcion":"Hecho de nieve fría"},
+      {"image":"img063","image_prompt":"thermometercartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CALOR","descripcion":"Cuando el sol quema mucho"},
+      {"image":"img064","image_prompt":"stormycloudforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"TORMENTA","descripcion":"Cuando hay lluvia y rayos"}
+    ]
+  },
+  {
+    "id": 9,
+    "nombre": "Nivel 9: Juguetes Divertidos",
+    "ejercicios": [
+      {"image":"img065","image_prompt":"soccerballforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PELOTA","descripcion":"Para jugar al fútbol"},
+      {"image":"img066","image_prompt":"dollcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MUÑECA","descripcion":"Juguete con forma de persona"},
+      {"image":"img067","image_prompt":"teddybearforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"OSO","descripcion":"Peluche suave para dormir"},
+      {"image":"img068","image_prompt":"kiteflyingforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"COMETA","descripcion":"Vuela con el viento"},
+      {"image":"img069","image_prompt":"toycarforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CARRITO","descripcion":"Auto pequeño de juguete"},
+      {"image":"img070","image_prompt":"skippingropeforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"SOGA","descripcion":"Para saltar y jugar"},
+      {"image":"img071","image_prompt":"puzzlepiecesforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PUZLE","descripcion":"Para armar figuras"},
+      {"image":"img072","image_prompt":"drumtoyforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"TAMBOR","descripcion":"Para hacer mucha música"}
+    ]
+  },
+  {
+    "id": 10,
+    "nombre": "Nivel 10: Ropa y Accesorios",
+    "ejercicios": [
+      {"image":"img073","image_prompt":"tshirtcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"POLO","descripcion":"Ropa de manga corta"},
+      {"image":"img074","image_prompt":"pantscartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"PANTALON","descripcion":"Cubre nuestras piernas"},
+      {"image":"img075","image_prompt":"dresscartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"VESTIDO","descripcion":"Ropa de una sola pieza"},
+      {"image":"img076","image_prompt":"shoescartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"ZAPATOS","descripcion":"Para caminar sin ensuciarnos"},
+      {"image":"img077","image_prompt":"hatcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"GORRO","descripcion":"Para proteger la cabeza"},
+      {"image":"img078","image_prompt":"sockscartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"MEDIAS","descripcion":"Para abrigar los pies"},
+      {"image":"img079","image_prompt":"jacketcartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"CASACA","descripcion":"Para cuando hace frío"},
+      {"image":"img080","image_prompt":"glovescartoonforkids,coloringbook,lineart,blackandwhite,thickoutlines,noshading,whitebackground","palabra":"GUANTES","descripcion":"Para abrigar las manos"}
+    ]
+  }
+]</textarea>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="font-bold text-slate-600 block mb-2">2. Paquete de imágenes:</label>
+                        <input type="file" id="zip-input" accept=".zip" onchange="cargarZip(this)" class="hidden">
+                        <label for="zip-input" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-pink-300 rounded-2xl cursor-pointer hover:bg-pink-50 text-pink-500 transition-all">
+                            <i class="ph-bold ph-file-zip text-3xl"></i>
+                            <span class="font-bold">Subir archivo .ZIP (PNGs)</span>
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <input type="text" id="pdf-name" placeholder="Nombre para tu archivo PDF" class="p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-sky-400">
+                        <div class="flex gap-2">
+                            <button onclick="actualizarDatos()" class="flex-1 bg-sky-500 text-white p-4 rounded-xl font-bold hover:bg-sky-600 shadow-lg shadow-sky-200 transition-all">Actualizar Todo</button>
+                            <button onclick="descargarPDF()" class="flex-1 bg-slate-800 text-white p-4 rounded-xl font-bold hover:bg-slate-700 shadow-lg shadow-slate-200 transition-all">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p id="info" class="mt-4 text-center text-sm font-medium text-slate-400 italic"></p>
+        </div>
+
+        <div id="game-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"></div>
+    </div>
+
+    <script>
+        window.todasLasHojas = [];
+        window.imagenesZip = {};
+        let nivelIdx = 0;
+
+        async function cargarZip(input) {
+            const file = input.files[0];
+            if(!file) return;
+            const zip = await JSZip.loadAsync(file);
+            window.imagenesZip = {};
+            for (let name in zip.files) {
+                if (name.match(/\.(png|jpg|jpeg)$/i)) {
+                    const blob = await zip.files[name].async("blob");
+                    const cleanName = name.split('/').pop();
+                    window.imagenesZip[cleanName] = URL.createObjectURL(blob);
+                }
+            }
+            document.getElementById('info').innerText = "✅ Imágenes sincronizadas desde el ZIP.";
+            render();
+        }
+
+        function actualizarDatos() {
+            try {
+                const val = document.getElementById('json-input').value.trim();
+                if(!val) return;
+                const parsed = JSON.parse(val);
+                
+                window.todasLasHojas = parsed.map(nivel => ({
+                    ...nivel,
+                    ejercicios: nivel.ejercicios.map(ej => {
+                        const palabra = ej.palabra.toUpperCase();
+                        // Seleccionamos 2 huecos
+                        const indices = [...Array(palabra.length).keys()].sort(() => Math.random() - 0.5);
+                        const huecos = indices.slice(0, 2).sort((a,b) => a-b);
+                        
+                        // LÓGICA DE LETRAS DUPLICADAS: Obtenemos exactamente lo que falta
+                        const letrasFaltantes = huecos.map(i => palabra[i]);
+                        
+                        // Distractores (evitando las que ya pusimos)
+                        const abc = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+                        let distractores = [];
+                        while(distractores.length < 2) {
+                            let r = abc[Math.floor(Math.random() * abc.length)];
+                            if(!letrasFaltantes.includes(r)) distractores.push(r);
+                        }
+
+                        const opciones = [...letrasFaltantes, ...distractores].sort(() => Math.random() - 0.5);
+
+                        return { ...ej, huecos, opciones };
+                    })
+                }));
+                nivelIdx = 0;
+                render();
+                alert("Datos actualizados. Marca de agua configurada.");
+            } catch (e) { alert("Error en el JSON: " + e.message); }
+        }
+
+        function render() {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            const nivel = window.todasLasHojas[nivelIdx];
+            if (!nivel) return;
+
+            nivel.ejercicios.forEach((ej, i) => {
+                const numImg = (nivelIdx * 8) + i + 1; // Ajusta según cantidad por nivel
+                const src = window.imagenesZip[`img${numImg.toString().padStart(3,'0')}.png`] || "";
+                
+                const card = document.createElement('div');
+                card.className = `p-8 rounded-[2.5rem] border-2 transition-all ${i === 0 ? 'card-active' : 'card-locked'}`;
+                card.innerHTML = `
+                    <div class="h-44 bg-slate-50 rounded-3xl mb-6 flex items-center justify-center">
+                        ${src ? `<img src="${src}" class="h-full object-contain drop-shadow-xl">` : `<span class="text-slate-200 font-bold">${ej.palabra}</span>`}
+                    </div>
+                    <div class="text-4xl font-black text-center text-slate-700 tracking-[0.2em] mb-6">
+                        ${ej.palabra.split('').map((l,idx) => ej.huecos.includes(idx) ? '<span class="text-sky-400">_</span>' : l).join(' ')}
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        ${ej.opciones.map(opt => `<span class="w-12 h-12 flex items-center justify-center bg-white border-2 border-dashed border-slate-300 rounded-xl font-bold text-xl text-slate-600 shadow-sm">${opt}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function descargarPDF() {
+            generarCuadernilloPDF(window.todasLasHojas, document.getElementById('pdf-name').value, window.imagenesZip);
+        }
+    </script>
+</body>
+</html>

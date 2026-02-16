@@ -1,0 +1,117 @@
+{
+  "categories":[
+    {
+      "id":"escuela",
+      "title":"La Escuela",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img001","prompt":"una maestra leyendo un libro en el aula, ilustración infantil"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img002","meaning":"maestra"},
+            {"type":"text","value":"lee"},
+            {"type":"text","value":"un"},
+            {"type":"image","value":"img003","meaning":"libro"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img004","prompt":"un niño escribiendo en su cuaderno en la escuela, ilustración infantil"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img005","meaning":"niño"},
+            {"type":"text","value":"escribe"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"su"},
+            {"type":"image","value":"img006","meaning":"cuaderno"}
+          ]
+        },
+        {
+          "id":3,
+          "mainImage":{"value":"img007","prompt":"una niña estudiando en la escuela"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img008","meaning":"niña"},
+            {"type":"text","value":"estudia"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img009","meaning":"escuela"}
+          ]
+        }
+      ]
+    },
+    {
+      "id":"casa",
+      "title":"La Casa",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img010","prompt":"una familia en la sala de su casa"},
+          "segments":[
+            {"type":"text","value":"Nuestra"},
+            {"type":"image","value":"img011","meaning":"familia"},
+            {"type":"text","value":"está"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img012","meaning":"casa"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img034","prompt":"una mamá cocinando en casa"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img035","meaning":"mamá"},
+            {"type":"text","value":"cocina"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img036","meaning":"cocina"}
+          ]
+        },
+        {
+          "id":3,
+          "mainImage":{"value":"img037","prompt":"un niño durmiendo en su cama"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img038","meaning":"niño"},
+            {"type":"text","value":"duerme"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"su"},
+            {"type":"image","value":"img039","meaning":"cama"}
+          ]
+        }
+      ]
+    },
+    {
+      "id":"parque",
+      "title":"El Parque",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img061","prompt":"un niño jugando con una pelota en el parque"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img062","meaning":"niño"},
+            {"type":"text","value":"juega"},
+            {"type":"text","value":"con"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img063","meaning":"pelota"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img064","prompt":"una familia caminando en el parque"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img065","meaning":"familia"},
+            {"type":"text","value":"camina"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"el"},
+            {"type":"image","value":"img066","meaning":"parque"}
+          ]
+        }
+      ]
+    }
+  ]
+}

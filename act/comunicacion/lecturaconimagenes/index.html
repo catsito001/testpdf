@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectura Mágica - Palabra por Palabra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+        
+        body { font-family: 'Fredoka', sans-serif; background-color: #F0F9FF; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        .bg-pattern { background-image: radial-gradient(#CBD5E1 2px, transparent 2px); background-size: 30px 30px; opacity: 0.2; }
+        
+        .flashcard {
+            border-radius: 2rem;
+            box-shadow: 0 12px 0px rgba(0, 0, 0, 0.05), 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            border: 5px solid white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            margin: auto;
+        }
+
+        @media (min-width: 768px) {
+            .flashcard { border-radius: 3rem; border-width: 10px; max-width: 900px; }
+        }
+
+        .dot-button { transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .active-word { transform: scale(1.15) translateY(-5px); color: #2563EB !important; text-shadow: 2px 2px 0px #93C5FD; }
+        .active-dot { transform: scale(1.3); filter: brightness(1.2); border-color: white !important; box-shadow: 0 0 10px #3B82F6; }
+        .sentence-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+        .sentence-scroll::-webkit-scrollbar { display: none; }
+        .img-fallback { background-color: #f3f4f6; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col items-center justify-center overflow-hidden">
+
+    <div class="fixed inset-0 bg-pattern pointer-events-none"></div>
+
+    <div id="loading-view" class="relative z-50 flex flex-col items-center justify-center bg-blue-500 inset-0 fixed text-white">
+        <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-2xl font-bold animate-pulse">Cargando aventuras...</p>
+    </div>
+
+    <div id="home-view" class="hidden relative z-10 flex flex-col items-center p-4 w-full max-w-5xl mx-auto overflow-y-auto max-h-screen">
+        <header class="text-center mb-6 mt-4 md:mb-8 md:mt-8 w-full flex flex-col items-center">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-blue-600 mb-2 drop-shadow-md">¡A LEER! 📚</h1>
+            <p class="text-blue-400 font-bold text-lg md:text-2xl uppercase tracking-widest text-center mb-6">Elige tu aventura</p>
+            
+            <button id="pdf-btn" onclick="exportAllToPDF()" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 hover:shadow-xl active:scale-95 transition-all flex items-center gap-3 border-4 border-white">
+                <i data-lucide="printer" class="w-6 h-6"></i>
+                <span>DESCARGAR LIBRO EN PDF</span>
+            </button>
+            <p id="pdf-status" class="text-sm text-gray-500 mt-2 hidden animate-pulse">Generando PDF vertical (4 por hoja)...</p>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 w-full mt-6 border-4 border-blue-100">
+
+    <h2 class="text-xl font-bold text-blue-600 mb-4">Importar Contenido</h2>
+
+    <!-- Nombre del PDF -->
+    <div class="mb-4">
+        <label class="block text-sm font-bold text-gray-600 mb-1">Nombre del PDF</label>
+        <input id="pdf-name-input" type="text" placeholder="Mi Libro de Lectura"
+            class="w-full border-2 border-blue-200 rounded-xl p-3 focus:outline-none focus:border-blue-400">
+    </div>
+
+    <!-- Textarea JSON -->
+    <div class="mb-4">
+        <label class="block text-sm font-bold text-gray-600 mb-1">Pegar JSON (data)</label>
+        <textarea id="json-input" rows="6"
+            placeholder='{"categories":[...]}'
+            class="w-full border-2 border-blue-200 rounded-xl p-3 focus:outline-none focus:border-blue-400">{
+  "categories":[
+    {
+      "id":"escuela",
+      "title":"La Escuela",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img001","prompt":"una maestra leyendo un libro en el aula, ilustración infantil"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img002","meaning":"maestra"},
+            {"type":"text","value":"lee"},
+            {"type":"text","value":"un"},
+            {"type":"image","value":"img003","meaning":"libro"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img004","prompt":"un niño escribiendo en su cuaderno en la escuela, ilustración infantil"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img005","meaning":"niño"},
+            {"type":"text","value":"escribe"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"su"},
+            {"type":"image","value":"img006","meaning":"cuaderno"}
+          ]
+        },
+        {
+          "id":3,
+          "mainImage":{"value":"img007","prompt":"una niña estudiando en la escuela"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img008","meaning":"niña"},
+            {"type":"text","value":"estudia"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img009","meaning":"escuela"}
+          ]
+        }
+      ]
+    },
+    {
+      "id":"casa",
+      "title":"La Casa",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img010","prompt":"una familia en la sala de su casa"},
+          "segments":[
+            {"type":"text","value":"Nuestra"},
+            {"type":"image","value":"img011","meaning":"familia"},
+            {"type":"text","value":"está"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img012","meaning":"casa"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img034","prompt":"una mamá cocinando en casa"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img035","meaning":"mamá"},
+            {"type":"text","value":"cocina"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img036","meaning":"cocina"}
+          ]
+        },
+        {
+          "id":3,
+          "mainImage":{"value":"img037","prompt":"un niño durmiendo en su cama"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img038","meaning":"niño"},
+            {"type":"text","value":"duerme"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"su"},
+            {"type":"image","value":"img039","meaning":"cama"}
+          ]
+        }
+      ]
+    },
+    {
+      "id":"parque",
+      "title":"El Parque",
+      "cards":[
+        {
+          "id":1,
+          "mainImage":{"value":"img061","prompt":"un niño jugando con una pelota en el parque"},
+          "segments":[
+            {"type":"text","value":"El"},
+            {"type":"image","value":"img062","meaning":"niño"},
+            {"type":"text","value":"juega"},
+            {"type":"text","value":"con"},
+            {"type":"text","value":"la"},
+            {"type":"image","value":"img063","meaning":"pelota"}
+          ]
+        },
+        {
+          "id":2,
+          "mainImage":{"value":"img064","prompt":"una familia caminando en el parque"},
+          "segments":[
+            {"type":"text","value":"La"},
+            {"type":"image","value":"img065","meaning":"familia"},
+            {"type":"text","value":"camina"},
+            {"type":"text","value":"en"},
+            {"type":"text","value":"el"},
+            {"type":"image","value":"img066","meaning":"parque"}
+          ]
+        }
+      ]
+    }
+  ]
+}
+</textarea>
+    </div>
+
+    <!-- ZIP imágenes -->
+    <div>
+        <label class="block text-sm font-bold text-gray-600 mb-1">Subir ZIP de imágenes</label>
+        <input id="zip-input" type="file" accept=".zip"
+            class="w-full border-2 border-blue-200 rounded-xl p-2 bg-white">
+    </div>
+
+    <button onclick="loadFromInputs()" 
+        class="mt-4 bg-blue-500 text-white font-bold px-6 py-2 rounded-xl hover:scale-105 transition">
+        Cargar Contenido
+    </button>
+
+</div>
+
+
+        </header>
+
+        <div id="categories-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full px-4 pb-20"></div>
+    </div>
+
+    <div id="game-view" class="hidden fixed inset-0 z-20 flex flex-col transition-colors duration-500 items-center overflow-hidden">
+        <div class="flex justify-between items-center p-3 md:p-6 w-full max-w-6xl relative z-30 shrink-0">
+            <button onclick="showHome()" class="bg-white/30 backdrop-blur-md p-2 md:p-4 rounded-xl text-white hover:bg-white/40 transition-all border-2 border-white/40 shadow-lg">
+                <i data-lucide="home" class="w-5 h-5 md:w-7 md:h-7"></i>
+            </button>
+            <div class="bg-white/30 backdrop-blur-md px-4 md:px-10 py-1.5 md:py-3 rounded-full border-2 border-white/40 shadow-lg">
+                <span id="category-title" class="text-white font-black text-sm md:text-2xl uppercase tracking-widest"></span>
+            </div>
+            <div class="w-10 md:w-16"></div>
+        </div>
+
+        <div class="flex-1 flex flex-col items-center justify-center p-2 md:p-6 w-full z-10 overflow-hidden">
+            <div class="flashcard bg-white w-full relative overflow-hidden">
+                <div id="card-context-area" class="w-full flex flex-col items-center justify-center py-3 md:py-4 px-4 border-b-4 border-dashed border-gray-100 shrink-0 bg-gray-50">
+                    <div id="main-image-container" class="w-full max-w-[280px] md:max-w-[400px] aspect-video rounded-2xl overflow-hidden shadow-inner border-2 border-white floating"></div>
+                </div>
+                <div class="flex-1 bg-white p-4 md:p-8 flex flex-col justify-center overflow-y-auto sentence-scroll">
+                    <div id="sentence-container" class="flex flex-wrap justify-center items-end gap-x-3 gap-y-6 md:gap-x-6 md:gap-y-10 w-full max-w-5xl mx-auto px-2"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center w-full max-w-3xl mt-4 px-2 md:mt-6 shrink-0 pb-4">
+                <button id="prev-btn" onclick="changeCard(-1)" class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-orange-400 text-white flex items-center justify-center shadow-[0_4px_0_#c2410c] active:translate-y-1 active:shadow-none transition-all disabled:opacity-30">
+                    <i data-lucide="chevron-left" class="w-6 h-6 md:w-10 md:h-10" stroke-width="3"></i>
+                </button>
+                <div class="bg-white/30 backdrop-blur-md px-4 md:px-10 py-2 md:py-3 rounded-full border-2 border-white/40 flex items-center gap-3 md:gap-6 shadow-xl text-white">
+                    <button onclick="readFullSentence()" class="bg-green-400 p-2 md:p-3 rounded-full text-white shadow-[0_3px_0_#15803d] hover:scale-110 active:scale-95 active:shadow-none transition-all">
+                        <i data-lucide="play" fill="white" class="w-5 h-5 md:w-7 md:h-7"></i>
+                    </button>
+                    <span id="progress-text" class="font-black text-base md:text-2xl tracking-tight">0 / 0</span>
+                </div>
+                <button id="next-btn" onclick="changeCard(1)" class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-blue-500 text-white flex items-center justify-center shadow-[0_4px_0_#1d4ed8] active:translate-y-1 active:shadow-none transition-all">
+                    <i data-lucide="chevron-right" class="w-6 h-6 md:w-10 md:h-10" stroke-width="3"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DOT_COLORS = ['bg-pink-400', 'bg-yellow-400', 'bg-green-400', 'bg-blue-400', 'bg-purple-400', 'bg-orange-400'];
+        const PDF_COLORS = [[244, 114, 182], [250, 204, 21], [74, 222, 128], [96, 165, 250], [192, 132, 252], [251, 146, 60]];
+        const CATEGORY_COLORS = { 'escuela': 'bg-indigo-500', 'casa': 'bg-emerald-500', 'default': 'bg-blue-500' };
+
+        let appData = null;
+        let currentCat = null;
+        let currentIdx = 0;
+        let imageMap = {};
+let pdfCustomName = "Libro";
+
+        // ==========================================
+        //  LÓGICA DE DATOS: ATOMIZAR PALABRAS
+        // ==========================================
+        
+        function generateRenderItems(card) {
+            let items = [];
+            card.segments.forEach(seg => {
+                if (seg.type === 'text') {
+                    const words = seg.value.trim().split(/\s+/);
+                    words.forEach(word => {
+                        items.push({ type: 'text', value: word, speak: word });
+                    });
+                } else {
+                    items.push({ type: 'image', value: seg.value, speak: seg.meaning });
+                }
+            });
+            return items;
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch('data.txt');
+                if (!response.ok) throw new Error('Error data.txt');
+                appData = await response.json();
+                document.getElementById('loading-view').classList.add('hidden');
+                document.getElementById('home-view').classList.remove('hidden');
+                initHome();
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loading-view').innerHTML = `<p class="text-white font-bold p-4 text-center">Error al cargar.<br>Revisa data.txt</p>`;
+            }
+        }
+
+        function initHome() {
+            const grid = document.getElementById('categories-grid');
+            grid.innerHTML = '';
+            appData.categories.forEach(cat => {
+                const colorClass = CATEGORY_COLORS[cat.id] || CATEGORY_COLORS.default;
+                const btn = document.createElement('button');
+                btn.className = `${colorClass} p-5 md:p-8 rounded-[2rem] shadow-[0_6px_0_rgba(0,0,0,0.1)] hover:scale-[1.03] active:translate-y-1 active:shadow-none transition-all flex items-center gap-4 border-4 border-white/20 text-white w-full`;
+                btn.onclick = () => startCategory(cat.id);
+                const iconName = cat.id === 'escuela' ? 'book-open' : (cat.id === 'casa' ? 'home' : 'star');
+                btn.innerHTML = `
+                    <div class="bg-white/20 p-3 md:p-5 rounded-2xl shadow-inner shrink-0"><i data-lucide="${iconName}" class="w-6 h-6 md:w-10 md:h-10"></i></div>
+                    <div class="text-left overflow-hidden flex-1"><h2 class="text-xl md:text-3xl font-black uppercase truncate">${cat.title}</h2></div>
+                    <div class="bg-white/20 p-2 rounded-full"><i data-lucide="chevron-right" class="w-6 h-6"></i></div>`;
+                grid.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        //  UTILIDADES PDF
+        // ==========================================
+        function getImageData(name) {
+    return new Promise((resolve) => {
+        if (imageMap[name]) {
+            resolve(imageMap[name]);
+        } else {
+            resolve(null);
+        }
+    });
+}
+
+        function drawStar(doc, cx, cy, spikes, outerRadius, innerRadius, color) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx, y = cy, step = Math.PI / spikes;
+            doc.setFillColor(color[0], color[1], color[2]);
+            doc.setDrawColor(255, 255, 255);
+            doc.setLineWidth(0.5);
+            doc.triangle(cx, cy-outerRadius, cx-innerRadius, cy+innerRadius, cx+innerRadius, cy+innerRadius, 'FD');
+            doc.triangle(cx, cy+outerRadius, cx-innerRadius, cy-innerRadius, cx+innerRadius, cy-innerRadius, 'FD');
+        }
+
+        function drawWatermark(doc, pageWidth, pageHeight) {
+            doc.setTextColor(200, 200, 200);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "italic");
+            doc.text(
+                "© Lectura Mágica",
+                pageWidth - 15,
+                pageHeight - 8,
+                { align: 'right' }
+            );
+        }
+
+        async function exportAllToPDF() {
+            const btn = document.getElementById('pdf-btn');
+            const status = document.getElementById('pdf-status');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            status.classList.remove('hidden');
+
+            const { jsPDF } = window.jspdf;
+            
+            // CONFIGURACIÓN VERTICAL (PORTRAIT) PARA 4 POR PÁGINA
+            // A4 Portrait = 210mm x 297mm
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            
+            const pageWidth = 210;
+            const pageHeight = 297;
+            const margin = 10; // Margen un poco más pequeño para aprovechar espacio
+            
+            // Cálculo para 4 tarjetas:
+            // Espacio vertical total disponible aprox 277mm (297 - 20 margenes)
+            // 277 / 4 = 69.25mm por tarjeta. 
+            // Usaremos 65mm de alto por tarjeta para dejar espacio entre ellas.
+           const cardHeight = 85;  // Más alto
+const cardWidth = pageWidth - (margin * 2);
+const cardGap = 8;      // Espacio entre tarjetas
+            
+            // Portada
+            doc.setFillColor(240, 249, 255);
+            doc.rect(0, 0, pageWidth, pageHeight, 'F');
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(40); // Ajustado para vertical
+            doc.setTextColor(37, 99, 235);
+            doc.text("MI LIBRO\nDE LECTURA", pageWidth/2, 100, { align: 'center' }); // Salto de línea para que quepa bien
+            doc.setFontSize(14);
+            doc.setTextColor(100, 100, 100);
+            doc.text("Lectura Mágica - Palabra por Palabra", pageWidth/2, 140, { align: 'center' });
+            
+            doc.addPage();
+            drawWatermark(doc, pageWidth, pageHeight);
+
+            let itemsOnPage = 0;
+            let currentY = margin;
+
+            for (const cat of appData.categories) {
+                for (let i = 0; i < cat.cards.length; i++) {
+                    const card = cat.cards[i];
+
+                    // CAMBIO AQUÍ: Si hay 4 o más, nueva página
+                    if (itemsOnPage >= 3) {
+                        doc.addPage();
+                        drawWatermark(doc, pageWidth, pageHeight);
+                        itemsOnPage = 0;
+                        currentY = margin;
+                    }
+
+                    const mainImgData = await getImageData(card.mainImage.value);
+                    const colorIdx = i % PDF_COLORS.length;
+                    const bColor = PDF_COLORS[colorIdx];
+
+                    // 1. Marco de la Tarjeta
+                    doc.setFillColor(255, 255, 255);
+                    doc.setDrawColor(bColor[0], bColor[1], bColor[2]);
+                    doc.setLineWidth(1.5);
+                    doc.roundedRect(margin, currentY, cardWidth, cardHeight, 5, 5, 'FD');
+
+                    // Etiqueta Categoría
+                    if (i === 0 || itemsOnPage === 0) {
+                        doc.setFillColor(bColor[0], bColor[1], bColor[2]);
+                        doc.roundedRect(margin, currentY - 4, 40, 8, 2, 2, 'F');
+                        doc.setTextColor(255, 255, 255);
+                        doc.setFontSize(7);
+                        doc.setFont("helvetica", "bold");
+                        doc.text((cat.title || "").toUpperCase(), margin + 20, currentY + 1, { align: 'center' });
+                    }
+
+                    // --- ZONA IMAGEN (ARRIBA CENTRO - MÁS PEQUEÑA) ---
+                    const imgW = 50;   // Más ancho
+const imgH = 38;   // Más alto
+                    const imgX = (pageWidth - imgW) / 2;
+                    const imgY = currentY + 4;
+
+                    // Fondo decorativo imagen
+                    doc.setDrawColor(220, 220, 220);
+                    doc.setFillColor(250, 250, 250);
+                    doc.roundedRect(imgX, imgY, imgW, imgH, 2, 2, 'FD');
+
+                    if (mainImgData) {
+                        doc.addImage(mainImgData, 'JPEG', imgX + 1.5, imgY + 1.5, imgW - 3, imgH - 3, undefined, 'FAST');
+                    } else {
+                        doc.setFontSize(16);
+                        doc.setTextColor(200, 200, 200);
+                        doc.text("?", imgX + (imgW/2), imgY + (imgH/2), { align: 'center' });
+                    }
+
+                    // --- ZONA TEXTO (ABAJO) ---
+                    const renderItems = generateRenderItems(card);
+                    
+                    const startTextX = margin + 3;
+                    const endTextX = pageWidth - margin - 3;
+                    const textYStart = imgY + imgH + 18; // Menos espacio vertical
+                    
+                    let cursorX = startTextX;
+                    let cursorY = textYStart;
+                    const wordSpacing = 5; // Menos espaciado
+                    const lineHeight = 14; // Menos salto de línea
+
+                    doc.setFont("helvetica", "bold");
+                    doc.setFontSize(32); // FUENTE MÁS PEQUEÑA (antes 48)
+
+                    for (let item of renderItems) {
+                        let itemWidth = 0;
+                        let isIcon = (item.type === 'image');
+
+                        if (isIcon) {
+                            itemWidth = 20; // Icono más pequeño (antes 26)
+                        } else {
+                            itemWidth = doc.getTextWidth(item.value.toUpperCase());
+                        }
+
+                        if (cursorX + itemWidth > endTextX) {
+                            cursorX = startTextX;
+                            cursorY += lineHeight;
+                        }
+
+                        if (isIcon) {
+                            const iconData = await getImageData(item.value);
+                            const iconY = cursorY - 12; // Ajuste vertical
+                            if (iconData) {
+                                doc.addImage(iconData, 'JPEG', cursorX, iconY, 20, 20); // 20x20
+                            } else {
+                                doc.setDrawColor(bColor[0], bColor[1], bColor[2]);
+                                doc.roundedRect(cursorX, iconY, 15, 15, 2, 2, 'S');
+                                doc.setFontSize(5);
+                                doc.text("IMG", cursorX + 7.5, iconY + 7.5, {align:'center'});
+                                doc.setFontSize(32); 
+                            }
+                        } else {
+                            doc.setTextColor(40, 40, 40);
+                            doc.text(item.value.toUpperCase(), cursorX, cursorY);
+                        }
+
+                        // PUNTO DE LECTURA
+                        const itemCenter = cursorX + (itemWidth / 2);
+                        doc.setFillColor(bColor[0], bColor[1], bColor[2]);
+                        doc.circle(itemCenter, cursorY + 8, 3, 'F'); // Punto más pequeño
+
+                        cursorX += itemWidth + wordSpacing;
+                    }
+
+                    // Adorno estrella (más pequeña)
+                    drawStar(doc, margin + cardWidth - 6, currentY + 6, 5, 2.5, 1.2, [255, 200, 0]);
+
+                    currentY += cardHeight + cardGap;
+                    itemsOnPage++;
+                }
+            }
+            
+          // ==========================================
+// MARCAS DE AGUA RANDOM (ANTI-COPIA)
+// ==========================================
+
+const totalPages = doc.internal.getNumberOfPages();
+
+for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+
+    const watermarkText = "FB: SUPER CURSOS TELGAM";
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.setTextColor(210, 210, 210);
+
+    const textWidth = doc.getTextWidth(watermarkText);
+    const visualHeight = textWidth;
+
+    const marginWM = 30;
+    const minY = marginWM + visualHeight;
+    const maxY = pageHeight - marginWM;
+
+    const randomY = Math.random() * (maxY - minY) + minY;
+
+    doc.text(watermarkText, 8, randomY, { angle: 90 });
+
+    // Footer aleatorio
+    const footerText = "FB: SUPER CURSOS TELGAM   www.narrion.site";
+
+    doc.setFontSize(9);
+    doc.setTextColor(140, 140, 140);
+
+    const footerWidth = doc.getTextWidth(footerText);
+
+    const minX = marginWM;
+    const maxX = pageWidth - footerWidth - marginWM;
+
+    const randomX = Math.random() * (maxX - minX) + minX;
+
+    doc.text(footerText, randomX, pageHeight - 10);
+}
+
+// Abrir PDF
+// Generar preview
+const pdfBlob = doc.output("blob");
+const pdfUrl = URL.createObjectURL(pdfBlob);
+
+// Abrir en nueva pestaña
+window.open(pdfUrl, "_blank");
+
+
+
+
+            
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            status.classList.add('hidden');
+        }
+
+        function startCategory(catId) {
+            currentCat = appData.categories.find(c => c.id === catId);
+            currentIdx = 0;
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('game-view').classList.remove('hidden');
+            const colorClass = CATEGORY_COLORS[catId] || CATEGORY_COLORS.default;
+            document.getElementById('game-view').className = `fixed inset-0 z-20 flex flex-col transition-colors duration-500 ${colorClass} items-center overflow-hidden`;
+            document.getElementById('category-title').innerText = currentCat.title;
+            renderCard();
+        }
+
+        function showHome() {
+            window.speechSynthesis.cancel();
+            document.getElementById('home-view').classList.remove('hidden');
+            document.getElementById('game-view').classList.add('hidden');
+        }
+
+        function speak(text, element, dot) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES';
+            utterance.rate = 0.9; 
+            
+            if(element && dot) {
+                element.classList.add('active-word');
+                dot.classList.add('active-dot');
+                utterance.onend = () => {
+                    element.classList.remove('active-word');
+                    dot.classList.remove('active-dot');
+                };
+            }
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function readFullSentence() {
+            const items = generateRenderItems(currentCat.cards[currentIdx]);
+            const fullText = items.map(i => i.speak).join(' ');
+            speak(fullText);
+        }
+
+        function renderCard() {
+            const card = currentCat.cards[currentIdx];
+            const mainImgContainer = document.getElementById('main-image-container');
+            const sentenceContainer = document.getElementById('sentence-container');
+
+            document.getElementById('prev-btn').disabled = currentIdx === 0;
+            document.getElementById('next-btn').disabled = false;
+            document.getElementById('progress-text').innerText = `${currentIdx + 1} / ${currentCat.cards.length}`;
+
+            // Imagen Principal
+            const mainImgSrc = `${card.mainImage.value}.jpg`;
+            mainImgContainer.innerHTML = `
+                <img src="${mainImgSrc}" alt="Imagen principal" class="w-full h-full object-cover"
+                     onerror="this.parentElement.innerHTML='<div class=\'w-full h-full img-fallback\'><i data-lucide=\'image\' class=\'w-12 h-12 text-gray-300\'></i></div>'; lucide.createIcons();">
+            `;
+
+            // Generar items individuales (Palabra por palabra)
+            const items = generateRenderItems(card);
+            
+            sentenceContainer.innerHTML = '';
+            
+            items.forEach((item, i) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex flex-col items-center gap-1 shrink-0'; 
+                
+                const colorClass = DOT_COLORS[i % DOT_COLORS.length];
+                const contentId = `item-content-${i}`;
+                const dotId = `item-dot-${i}`;
+                
+                let contentHtml = '';
+                
+                if (item.type === 'text') {
+                    contentHtml = `<span id="${contentId}" class="text-4xl sm:text-5xl md:text-6xl font-black tracking-wide text-gray-800 transition-all duration-200 cursor-pointer select-none uppercase hover:text-blue-500">${item.value}</span>`;
+                } else {
+                    const iconSrc = `${item.value}.jpg`;
+                    contentHtml = `
+                    <div id="${contentId}" class="p-1 rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 cursor-pointer w-16 h-16 md:w-20 md:h-20 flex items-center justify-center hover:scale-105">
+                        <img src="${iconSrc}" class="w-full h-full object-contain" 
+                             onerror="this.parentElement.innerHTML='<i data-lucide=\'box\' class=\'w-6 h-6 text-gray-400\'></i>'; lucide.createIcons();">
+                    </div>`;
+                }
+
+                wrapper.innerHTML = `
+                    <div class="item-trigger mb-1">${contentHtml}</div>
+                    <button id="${dotId}" class="dot-button w-6 h-6 md:w-8 md:h-8 rounded-full border-[3px] border-white shadow-md ${colorClass} flex items-center justify-center hover:scale-110 active:scale-90">
+                        <div class="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
+                    </button>
+                `;
+
+                const triggerAction = () => {
+                    const el = document.getElementById(contentId);
+                    const dot = document.getElementById(dotId);
+                    speak(item.speak, el, dot);
+                };
+
+                wrapper.querySelector('.item-trigger').onclick = triggerAction;
+                wrapper.querySelector('.dot-button').onclick = triggerAction;
+
+                sentenceContainer.appendChild(wrapper);
+            });
+            lucide.createIcons();
+        }
+
+        function changeCard(dir) {
+            currentIdx += dir;
+            if (currentIdx >= currentCat.cards.length) { showHome(); return; }
+            if (currentIdx < 0) currentIdx = 0;
+            renderCard();
+        }
+
+
+
+        async function loadFromInputs() {
+
+    const jsonText = document.getElementById('json-input').value.trim();
+    const zipFile = document.getElementById('zip-input').files[0];
+    const pdfName = document.getElementById('pdf-name-input').value.trim();
+
+    if (!jsonText) {
+        alert("Pega el JSON primero");
+        return;
+    }
+
+    try {
+        const rawData = JSON.parse(jsonText);
+
+// Si viene como array directo (nuevo formato)
+if (Array.isArray(rawData)) {
+
+    appData = {
+        categories: [
+            {
+                id: "contenido",
+                title: "Contenido",
+                cards: rawData.map(item => ({
+                    id: item.id || 0,
+                    mainImage: {
+                        value: item.mainImage?.id || ""
+                    },
+                    segments: (item.segments || []).map(seg => ({
+                        type: seg.type,
+                        value: seg.type === "image"
+                            ? seg.imageId
+                            : seg.word,
+                        meaning: seg.word || ""
+                    }))
+                }))
+            }
+        ]
+    };
+
+} else {
+    appData = rawData;
+}
+    } catch (e) {
+        alert("JSON inválido");
+        return;
+    }
+
+    if (pdfName) {
+        pdfCustomName = pdfName;
+    }
+
+    if (zipFile) {
+        const zip = await JSZip.loadAsync(zipFile);
+        imageMap = {};
+
+        const promises = [];
+
+        zip.forEach((relativePath, zipEntry) => {
+            if (!zipEntry.dir) {
+                const promise = zipEntry.async("base64").then(data => {
+                    const fileName = relativePath.replace(/\.[^/.]+$/, "");
+                    imageMap[fileName] = "data:image/jpeg;base64," + data;
+                });
+                promises.push(promise);
+            }
+        });
+
+        await Promise.all(promises);
+    }
+
+    document.getElementById('loading-view').classList.add('hidden');
+    document.getElementById('home-view').classList.remove('hidden');
+    initHome();
+
+    alert("Contenido cargado correctamente");
+}
+
+
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>

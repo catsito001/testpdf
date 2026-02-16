@@ -1,0 +1,315 @@
+{
+  "type": "reading_comprehension_game",
+  "level": "kids",
+  "favorite_character": "Stitch",
+  "stories": [
+    {
+      "id": 1,
+      "separator": "---STORY---",
+      "title": "Stitch y el helado gigante",
+      "image": "img001",
+      "image_prompt": "Classic Stitch holding a giant colorful ice cream in a sunny park, happy expression, original movie style look, soft bright colors, clean children book illustration",
+      "text": [
+        "Stitch salió a pasear en un día muy caluroso.",
+        "Encontró un helado gigante de muchos colores y lo abrazó con alegría.",
+        "Stitch decidió compartir su helado para que todos fueran felices.",
+        "Sus amigos sonrieron al recibir un poco de helado.",
+        "Stitch aprendió que compartir hace que los momentos sean más especiales."
+      ],
+      "activities": [
+        {
+          "icon": "🍦",
+          "question": "¿Qué encontró Stitch?",
+          "options": ["Un pastel", "Un helado gigante", "Una pelota"],
+          "answer": 1,
+          "keywords": ["helado gigante"]
+        },
+        {
+          "icon": "☀️",
+          "question": "¿Cómo estaba el día?",
+          "options": ["Lluvioso", "Muy frío", "Muy caluroso"],
+          "answer": 2,
+          "keywords": ["día muy caluroso"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "separator": "---STORY---",
+      "title": "Stitch en el parque",
+      "image": "img002",
+      "image_prompt": "Classic Stitch playing in a green park with trees and flowers, cheerful expression, original movie style look, soft bright colors, children storybook illustration",
+      "text": [
+        "Stitch fue al parque a jugar con sus amigos.",
+        "Corrió entre los árboles y saltó sobre el pasto verde.",
+        "Al final del día, Stitch estaba cansado pero muy contento.",
+        "Se despidió con un abrazo y prometió volver pronto.",
+        "Stitch aprendió que jugar con amigos fortalece la amistad."
+      ],
+      "activities": [
+        {
+          "icon": "🌳",
+          "question": "¿A dónde fue Stitch?",
+          "options": ["Al parque", "A la escuela", "A la playa"],
+          "answer": 0,
+          "keywords": ["fue al parque"]
+        },
+        {
+          "icon": "😊",
+          "question": "¿Cómo se sentía Stitch al final?",
+          "options": ["Triste", "Enojado", "Contento"],
+          "answer": 2,
+          "keywords": ["muy contento"]
+        }
+      ]
+    },
+
+    {
+      "id": 3,
+      "separator": "---STORY---",
+      "title": "Stitch aprende a leer",
+      "image": "img003",
+      "image_prompt": "Classic Stitch reading a colorful book in a cozy room, warm soft lighting, original movie style look, clean children illustration",
+      "text": [
+        "Stitch encontró un libro con dibujos muy bonitos.",
+        "Se sentó tranquilo y empezó a leer palabra por palabra.",
+        "Cada día, Stitch aprende algo nuevo leyendo.",
+        "Aunque algunas palabras eran difíciles, no se rindió.",
+        "Stitch aprendió que practicar todos los días lo hace más inteligente."
+      ],
+      "activities": [
+        {
+          "icon": "📖",
+          "question": "¿Qué encontró Stitch?",
+          "options": ["Un cuaderno", "Un libro", "Un juguete"],
+          "answer": 1,
+          "keywords": ["encontró un libro"]
+        },
+        {
+          "icon": "🧠",
+          "question": "¿Qué aprende Stitch al leer?",
+          "options": ["A correr", "Algo nuevo", "A dormir"],
+          "answer": 1,
+          "keywords": ["aprende algo nuevo"]
+        }
+      ]
+    },
+
+    {
+      "id": 4,
+      "separator": "---STORY---",
+      "title": "Stitch y la pelota",
+      "image": "img004",
+      "image_prompt": "Classic Stitch playing with a colorful ball outdoors, sunny day, original movie style look, clean children illustration",
+      "text": [
+        "Stitch encontró una pelota muy colorida.",
+        "La lanzó al aire y la atrapó con mucha emoción.",
+        "Jugar con la pelota hizo que Stitch riera mucho.",
+        "Invitó a sus amigos para turnarse y jugar juntos.",
+        "Stitch aprendió que respetar turnos es importante al jugar."
+      ],
+      "activities": [
+        {
+          "icon": "⚽",
+          "question": "¿Con qué jugaba Stitch?",
+          "options": ["Una pelota", "Un coche", "Un libro"],
+          "answer": 0,
+          "keywords": ["una pelota"]
+        },
+        {
+          "icon": "😄",
+          "question": "¿Cómo se sentía Stitch?",
+          "options": ["Aburrido", "Asustado", "Feliz"],
+          "answer": 2,
+          "keywords": ["rió mucho"]
+        }
+      ]
+    },
+
+    {
+      "id": 5,
+      "separator": "---STORY---",
+      "title": "Stitch ayuda a un amigo",
+      "image": "img005",
+      "image_prompt": "Classic Stitch helping a small animal friend, warm friendly scene, original movie style look, soft children illustration",
+      "text": [
+        "Un amigo de Stitch necesitaba ayuda.",
+        "Stitch lo escuchó con atención y decidió ayudarlo.",
+        "Ayudar a otros hace que Stitch se sienta bien.",
+        "Su amigo le dio las gracias con una gran sonrisa.",
+        "Stitch aprendió que ser amable cambia el día de los demás."
+      ],
+      "activities": [
+        {
+          "icon": "🤝",
+          "question": "¿Qué hizo Stitch?",
+          "options": ["Se fue", "Ayudó a su amigo", "Se escondió"],
+          "answer": 1,
+          "keywords": ["decidió ayudarlo"]
+        },
+        {
+          "icon": "💙",
+          "question": "¿Cómo se siente Stitch al ayudar?",
+          "options": ["Mal", "Bien", "Cansado"],
+          "answer": 1,
+          "keywords": ["se sienta bien"]
+        }
+      ]
+    },
+
+    {
+      "id": 6,
+      "separator": "---STORY---",
+      "title": "Stitch y la música",
+      "image": "img006",
+      "image_prompt": "Classic Stitch dancing happily with musical notes around him, original movie style look, bright playful colors, children illustration",
+      "text": [
+        "Stitch escuchó una canción divertida.",
+        "Empezó a mover su cuerpo y a bailar sin parar.",
+        "La música hace feliz a Stitch.",
+        "También invitó a sus amigos a bailar con él.",
+        "Stitch aprendió que la música une a las personas."
+      ],
+      "activities": [
+        {
+          "icon": "🎵",
+          "question": "¿Qué escuchó Stitch?",
+          "options": ["Una historia", "Una canción", "Un ruido"],
+          "answer": 1,
+          "keywords": ["escuchó una canción"]
+        },
+        {
+          "icon": "💃",
+          "question": "¿Qué hizo Stitch con la música?",
+          "options": ["Durmió", "Bailó", "Leyó"],
+          "answer": 1,
+          "keywords": ["empezó a bailar"]
+        }
+      ]
+    },
+
+    {
+      "id": 7,
+      "separator": "---STORY---",
+      "title": "Stitch en la playa",
+      "image": "img007",
+      "image_prompt": "Classic Stitch at the beach with sand and blue sea, sunny tropical day, original movie style look, clean children illustration",
+      "text": [
+        "Stitch fue a la playa a disfrutar del sol.",
+        "Jugó con la arena y miró el mar azul.",
+        "La playa es uno de los lugares favoritos de Stitch.",
+        "Recogió su basura antes de irse a casa.",
+        "Stitch aprendió que debemos cuidar la naturaleza."
+      ],
+      "activities": [
+        {
+          "icon": "🏖️",
+          "question": "¿A dónde fue Stitch?",
+          "options": ["A la playa", "Al bosque", "A la montaña"],
+          "answer": 0,
+          "keywords": ["fue a la playa"]
+        },
+        {
+          "icon": "🌊",
+          "question": "¿Qué miró Stitch?",
+          "options": ["El mar", "La nieve", "La ciudad"],
+          "answer": 0,
+          "keywords": ["miró el mar azul"]
+        }
+      ]
+    },
+
+    {
+      "id": 8,
+      "separator": "---STORY---",
+      "title": "Stitch y el dibujo",
+      "image": "img008",
+      "image_prompt": "Classic Stitch drawing with crayons on paper, bright colorful art scene, original movie style look, children book illustration",
+      "text": [
+        "Stitch tomó unos colores y una hoja.",
+        "Dibujó formas y líneas muy divertidas.",
+        "A Stitch le encanta crear dibujos.",
+        "Cada dibujo era diferente y especial.",
+        "Stitch aprendió que la imaginación no tiene límites."
+      ],
+      "activities": [
+        {
+          "icon": "🎨",
+          "question": "¿Qué usó Stitch para dibujar?",
+          "options": ["Lápices de colores", "Tijeras", "Bloques"],
+          "answer": 0,
+          "keywords": ["tomó unos colores"]
+        },
+        {
+          "icon": "🖍️",
+          "question": "¿Qué dibujó Stitch?",
+          "options": ["Formas divertidas", "Números", "Letras"],
+          "answer": 0,
+          "keywords": ["dibujó formas"]
+        }
+      ]
+    },
+
+    {
+      "id": 9,
+      "separator": "---STORY---",
+      "title": "Stitch ordena su cuarto",
+      "image": "img009",
+      "image_prompt": "Classic Stitch cleaning and organizing his colorful room, original movie style look, bright tidy children illustration",
+      "text": [
+        "El cuarto de Stitch estaba desordenado.",
+        "Poco a poco guardó sus juguetes.",
+        "Al terminar, Stitch se sintió orgulloso.",
+        "Ahora podía encontrar todo fácilmente.",
+        "Stitch aprendió que el orden trae tranquilidad."
+      ],
+      "activities": [
+        {
+          "icon": "🧸",
+          "question": "¿Qué guardó Stitch?",
+          "options": ["Comida", "Juguetes", "Ropa"],
+          "answer": 1,
+          "keywords": ["guardó sus juguetes"]
+        },
+        {
+          "icon": "⭐",
+          "question": "¿Cómo se sintió al terminar?",
+          "options": ["Triste", "Orgulloso", "Asustado"],
+          "answer": 1,
+          "keywords": ["se sintió orgulloso"]
+        }
+      ]
+    },
+
+    {
+      "id": 10,
+      "separator": "---STORY---",
+      "title": "Stitch antes de dormir",
+      "image": "img010",
+      "image_prompt": "Classic Stitch sleeping peacefully in bed with night lamp and stars, original movie style look, soft warm children illustration",
+      "text": [
+        "Stitch se lavó los dientes y se puso su pijama.",
+        "Se acostó en su cama y cerró los ojos.",
+        "Pronto, Stitch soñó con nuevas aventuras.",
+        "Pensó en todo lo bueno que hizo durante el día.",
+        "Stitch aprendió que tener una rutina lo ayuda a descansar mejor."
+      ],
+      "activities": [
+        {
+          "icon": "🛏️",
+          "question": "¿Qué hizo Stitch antes de dormir?",
+          "options": ["Jugó", "Se lavó los dientes", "Salió a correr"],
+          "answer": 1,
+          "keywords": ["se lavó los dientes"]
+        },
+        {
+          "icon": "🌙",
+          "question": "¿Qué hizo Stitch al acostarse?",
+          "options": ["Lloró", "Soñó", "Saltó"],
+          "answer": 1,
+          "keywords": ["soñó con nuevas aventuras"]
+        }
+      ]
+    }
+  ]
+}

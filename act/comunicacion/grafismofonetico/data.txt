@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "word": "PERRO",
+    "image": "img001.png",
+    "image_prompt": "Cute original yellow electric creature with long pointy ears and red cheeks, cartoon style, standing and smiling while pointing at a friendly brown puppy beside him, white background, high quality vector illustration.",
+    "rows": [
+      { "syllable": "PE", "color": "brown", "shape": "Circle" },
+      { "syllable": "RRO", "color": "orange", "shape": "Square" }
+    ]
+  },
+  {
+    "id": 2,
+    "word": "GATO",
+    "image": "img002.png",
+    "image_prompt": "Cute original yellow electric creature with big eyes and lightning tail, happily pointing at a small grey kitten, cartoon style, white background, colorful clean vector.",
+    "rows": [
+      { "syllable": "GA", "color": "grey", "shape": "Triangle" },
+      { "syllable": "TO", "color": "pink", "shape": "Circle" }
+    ]
+  },
+  {
+    "id": 3,
+    "word": "CONEJO",
+    "image": "img003.png",
+    "image_prompt": "Original yellow electric character smiling and pointing at a white bunny eating a carrot, playful pose, cartoon style, white background, bright children illustration.",
+    "rows": [
+      { "syllable": "CO", "color": "blue", "shape": "Square" },
+      { "syllable": "NE", "color": "green", "shape": "Hexagon" },
+      { "syllable": "JO", "color": "yellow", "shape": "Diamond" }
+    ]
+  },
+  {
+    "id": 4,
+    "word": "PELOTA",
+    "image": "img004.png",
+    "image_prompt": "Original yellow electric creature kicking a colorful soccer ball and pointing at it, energetic pose, cartoon 3D style, white background.",
+    "rows": [
+      { "syllable": "PE", "color": "red", "shape": "Circle" },
+      { "syllable": "LO", "color": "white", "shape": "Pentagon" },
+      { "syllable": "TA", "color": "blue", "shape": "Square" }
+    ]
+  },
+
+  {
+    "id": 5,
+    "word": "JIRAFA",
+    "image": "img005.png",
+    "image_prompt": "Cute yellow electric character pointing up at a tall friendly giraffe, cartoon style, bright colors, white background.",
+    "rows": [
+      { "syllable": "JI", "color": "amber", "shape": "Triangle" },
+      { "syllable": "RA", "color": "orange", "shape": "Circle" },
+      { "syllable": "FA", "color": "brown", "shape": "Hexagon" }
+    ]
+  },
+
+  {
+    "id": 6,
+    "word": "BALLENA",
+    "image": "img006.png",
+    "image_prompt": "Original yellow electric character inside a small blue submarine window pointing at a happy whale underwater, cartoon style, white background.",
+    "rows": [
+      { "syllable": "BA", "color": "cyan", "shape": "Square" },
+      { "syllable": "LLE", "color": "blue", "shape": "Circle" },
+      { "syllable": "NA", "color": "teal", "shape": "Diamond" }
+    ]
+  },
+
+  {
+    "id": 7,
+    "word": "TORTUGA",
+    "image": "img007.png",
+    "image_prompt": "Yellow electric creature crouching and smiling while pointing at a slow green turtle, cute cartoon style, white background.",
+    "rows": [
+      { "syllable": "TOR", "color": "green", "shape": "Hexagon" },
+      { "syllable": "TU", "color": "lime", "shape": "Triangle" },
+      { "syllable": "GA", "color": "brown", "shape": "Circle" }
+    ]
+  },
+
+  {
+    "id": 8,
+    "word": "PLATANO",
+    "image": "img008.png",
+    "image_prompt": "Happy yellow electric character holding and pointing at a ripe banana, cartoon style, bright colors, white background.",
+    "rows": [
+      { "syllable": "PLA", "color": "yellow", "shape": "Square" },
+      { "syllable": "TA", "color": "amber", "shape": "Circle" },
+      { "syllable": "NO", "color": "green", "shape": "Diamond" }
+    ]
+  },
+
+  {
+    "id": 9,
+    "word": "HELADO",
+    "image": "img009.png",
+    "image_prompt": "Original yellow electric character excitedly pointing at a colorful ice cream cone, cartoon style, white background.",
+    "rows": [
+      { "syllable": "HE", "color": "pink", "shape": "Circle" },
+      { "syllable": "LA", "color": "brown", "shape": "Triangle" },
+      { "syllable": "DO", "color": "orange", "shape": "Square" }
+    ]
+  },
+
+  {
+    "id": 10,
+    "word": "COHETE",
+    "image": "img010.png",
+    "image_prompt": "Cute yellow electric character wearing astronaut helmet pointing at a red and white rocket launching, cartoon style, white background.",
+    "rows": [
+      { "syllable": "CO", "color": "red", "shape": "Triangle" },
+      { "syllable": "HE", "color": "blue", "shape": "Square" },
+      { "syllable": "TE", "color": "grey", "shape": "Hexagon" }
+    ]
+  }
+]

@@ -1,0 +1,307 @@
+{
+  "type": "reading_comprehension_game",
+  "level": "kids",
+  "favorite_character": "Peppa Pig",
+  "stories": [
+    {
+      "id": 1,
+      "separator": "---STORY---",
+      "title": "Peppa y el charco de lodo",
+      "image": "img001",
+      "image_prompt": "Peppa Pig jumping in a muddy puddle with rain boots, happy expression, bright colorful children book illustration style",
+      "text": [
+        "Peppa salió después de la lluvia.",
+        "Encontró un gran charco de lodo en el jardín.",
+        "Peppa saltó dentro del charco con mucha alegría.",
+        "George también quiso saltar con ella.",
+        "Peppa aprendió que saltar en charcos es más divertido en compañía."
+      ],
+      "activities": [
+        {
+          "icon": "💦",
+          "question": "¿Qué encontró Peppa?",
+          "options": ["Un árbol", "Un charco de lodo", "Una pelota"],
+          "answer": 1,
+          "keywords": ["charco de lodo"]
+        },
+        {
+          "icon": "👢",
+          "question": "¿Qué hizo Peppa?",
+          "options": ["Saltó", "Durmió", "Corrió a casa"],
+          "answer": 0,
+          "keywords": ["saltó"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "separator": "---STORY---",
+      "title": "Peppa en la escuela",
+      "image": "img002",
+      "image_prompt": "Peppa Pig in a classroom with friends and a teacher, colorful classroom, cheerful children illustration",
+      "text": [
+        "Peppa fue a la escuela muy contenta.",
+        "La maestra les enseñó una nueva canción.",
+        "Peppa cantó junto a sus amigos.",
+        "Después dibujaron animales en sus cuadernos.",
+        "Peppa aprendió que la escuela es un lugar para aprender y divertirse."
+      ],
+      "activities": [
+        {
+          "icon": "🏫",
+          "question": "¿A dónde fue Peppa?",
+          "options": ["Al parque", "A la escuela", "A la playa"],
+          "answer": 1,
+          "keywords": ["fue a la escuela"]
+        },
+        {
+          "icon": "🎵",
+          "question": "¿Qué aprendieron?",
+          "options": ["Una canción", "Un juego nuevo", "Una receta"],
+          "answer": 0,
+          "keywords": ["nueva canción"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "separator": "---STORY---",
+      "title": "Peppa y George juegan",
+      "image": "img003",
+      "image_prompt": "Peppa Pig and George playing with toys in a colorful room, happy scene, children illustration style",
+      "text": [
+        "Peppa y George estaban en su habitación.",
+        "George jugaba con su dinosaurio favorito.",
+        "Peppa organizó una pequeña fiesta de juguetes.",
+        "Los dos rieron mucho mientras jugaban.",
+        "Peppa aprendió que compartir juguetes hace más feliz a George."
+      ],
+      "activities": [
+        {
+          "icon": "🦖",
+          "question": "¿Con qué jugaba George?",
+          "options": ["Un coche", "Un dinosaurio", "Una pelota"],
+          "answer": 1,
+          "keywords": ["dinosaurio"]
+        },
+        {
+          "icon": "😊",
+          "question": "¿Cómo se sentían?",
+          "options": ["Tristes", "Felices", "Enojados"],
+          "answer": 1,
+          "keywords": ["rieron mucho"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "separator": "---STORY---",
+      "title": "Peppa en el parque",
+      "image": "img004",
+      "image_prompt": "Peppa Pig playing on a swing in a sunny park with friends, bright cheerful children illustration",
+      "text": [
+        "Peppa fue al parque con su familia.",
+        "Se subió al columpio y se balanceó alto.",
+        "George jugó en el tobogán.",
+        "Mamá Pig y Papá Pig miraban sonrientes.",
+        "Peppa aprendió que jugar al aire libre es muy saludable."
+      ],
+      "activities": [
+        {
+          "icon": "🌳",
+          "question": "¿Dónde jugaba Peppa?",
+          "options": ["En el parque", "En la cocina", "En la escuela"],
+          "answer": 0,
+          "keywords": ["parque"]
+        },
+        {
+          "icon": "🎠",
+          "question": "¿En qué se subió Peppa?",
+          "options": ["En una bicicleta", "En el columpio", "En un auto"],
+          "answer": 1,
+          "keywords": ["columpio"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "separator": "---STORY---",
+      "title": "Peppa ayuda en casa",
+      "image": "img005",
+      "image_prompt": "Peppa Pig helping Mommy Pig in the kitchen, warm colorful children illustration",
+      "text": [
+        "Mamá Pig estaba preparando la cena.",
+        "Peppa quiso ayudar a poner la mesa.",
+        "Colocó los platos y los vasos con cuidado.",
+        "George llevó las servilletas.",
+        "Peppa aprendió que ayudar en casa es importante."
+      ],
+      "activities": [
+        {
+          "icon": "🍽️",
+          "question": "¿Qué hizo Peppa?",
+          "options": ["Jugó", "Puso la mesa", "Durmió"],
+          "answer": 1,
+          "keywords": ["puso la mesa"]
+        },
+        {
+          "icon": "🏠",
+          "question": "¿Quién preparaba la cena?",
+          "options": ["Papá Pig", "Mamá Pig", "George"],
+          "answer": 1,
+          "keywords": ["mamá pig"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "separator": "---STORY---",
+      "title": "Peppa y la bicicleta",
+      "image": "img006",
+      "image_prompt": "Peppa Pig riding a small bicycle with helmet in a sunny street, bright children book illustration",
+      "text": [
+        "Peppa recibió una bicicleta nueva.",
+        "Papá Pig le enseñó a mantener el equilibrio.",
+        "Al principio fue difícil.",
+        "Después de practicar, Peppa logró avanzar sola.",
+        "Peppa aprendió que practicar ayuda a mejorar."
+      ],
+      "activities": [
+        {
+          "icon": "🚲",
+          "question": "¿Qué recibió Peppa?",
+          "options": ["Una bicicleta", "Un libro", "Un muñeco"],
+          "answer": 0,
+          "keywords": ["bicicleta"]
+        },
+        {
+          "icon": "⭐",
+          "question": "¿Qué la ayudó a mejorar?",
+          "options": ["Dormir", "Practicar", "Cantar"],
+          "answer": 1,
+          "keywords": ["practicar"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "separator": "---STORY---",
+      "title": "Peppa en la playa",
+      "image": "img007",
+      "image_prompt": "Peppa Pig building a sandcastle at the beach with family, sunny happy children illustration",
+      "text": [
+        "Peppa fue a la playa con su familia.",
+        "Construyó un castillo de arena.",
+        "George decoró el castillo con conchas.",
+        "Las olas sonaban suavemente.",
+        "Peppa aprendió que la playa es un lugar divertido para explorar."
+      ],
+      "activities": [
+        {
+          "icon": "🏖️",
+          "question": "¿Qué construyó Peppa?",
+          "options": ["Una casa", "Un castillo de arena", "Un barco"],
+          "answer": 1,
+          "keywords": ["castillo de arena"]
+        },
+        {
+          "icon": "🐚",
+          "question": "¿Qué usó George?",
+          "options": ["Conchas", "Piedras", "Hojas"],
+          "answer": 0,
+          "keywords": ["conchas"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "separator": "---STORY---",
+      "title": "Peppa y el dibujo",
+      "image": "img008",
+      "image_prompt": "Peppa Pig drawing with crayons at a table, colorful art scene, children book illustration",
+      "text": [
+        "Peppa tomó sus colores favoritos.",
+        "Dibujó a su familia bajo un arcoíris.",
+        "George pintó un gran dinosaurio verde.",
+        "Mamá Pig colgó los dibujos en la pared.",
+        "Peppa aprendió que el arte muestra nuestra imaginación."
+      ],
+      "activities": [
+        {
+          "icon": "🎨",
+          "question": "¿Qué dibujó Peppa?",
+          "options": ["Un arcoíris con su familia", "Una montaña", "Un auto"],
+          "answer": 0,
+          "keywords": ["arcoíris"]
+        },
+        {
+          "icon": "🦕",
+          "question": "¿Qué pintó George?",
+          "options": ["Un dinosaurio", "Un perro", "Un pez"],
+          "answer": 0,
+          "keywords": ["dinosaurio"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "separator": "---STORY---",
+      "title": "Peppa ordena su habitación",
+      "image": "img009",
+      "image_prompt": "Peppa Pig cleaning her colorful bedroom, tidy and cheerful children illustration",
+      "text": [
+        "La habitación de Peppa estaba desordenada.",
+        "Guardó sus juguetes en cajas.",
+        "Colocó sus libros en el estante.",
+        "George ayudó con los bloques.",
+        "Peppa aprendió que ordenar facilita encontrar las cosas."
+      ],
+      "activities": [
+        {
+          "icon": "🧸",
+          "question": "¿Qué guardó Peppa?",
+          "options": ["Zapatos", "Juguetes", "Comida"],
+          "answer": 1,
+          "keywords": ["juguetes"]
+        },
+        {
+          "icon": "📚",
+          "question": "¿Dónde puso los libros?",
+          "options": ["En el estante", "En el piso", "En la cocina"],
+          "answer": 0,
+          "keywords": ["estante"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "separator": "---STORY---",
+      "title": "Peppa antes de dormir",
+      "image": "img010",
+      "image_prompt": "Peppa Pig in pajamas going to bed with a night lamp and stars, soft warm children illustration",
+      "text": [
+        "Peppa se puso su pijama rosa.",
+        "Mamá Pig le leyó un cuento.",
+        "George escuchaba atento.",
+        "Peppa cerró los ojos y sonrió.",
+        "Peppa aprendió que una rutina ayuda a descansar mejor."
+      ],
+      "activities": [
+        {
+          "icon": "🛏️",
+          "question": "¿Qué le leyó Mamá Pig?",
+          "options": ["Una receta", "Un cuento", "Una carta"],
+          "answer": 1,
+          "keywords": ["cuento"]
+        },
+        {
+          "icon": "🌙",
+          "question": "¿Cómo terminó Peppa?",
+          "options": ["Corriendo", "Sonriendo", "Saltando"],
+          "answer": 1,
+          "keywords": ["sonrió"]
+        }
+      ]
+    }
+  ]
+}

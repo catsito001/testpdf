@@ -1,0 +1,846 @@
+{
+  "type": "reading_comprehension_game",
+  "level": "kids",
+  "stories": [
+    {
+      "id": 1,
+      "separator": "---STORY---",
+      "title": "La ardilla y su gran tesoro",
+      "image": "img001",
+      "image_prompt": "Happy squirrel holding a large hazelnut in a colorful forest setting, bright vibrant colors, soft cartoon style, friendly children’s illustration, clean shapes, cheerful mood",
+      "text": [
+        "Susi es una ardilla muy feliz que vive en un bosque lleno de colores.",
+        "Hoy encontró una avellana gigante y la sujeta con mucha fuerza entre sus patitas.",
+        "Ella guardará su tesoro para compartirlo con sus amigos cuando llegue el invierno."
+      ],
+      "activities": [
+        {
+          "icon": "🐿️",
+          "question": "¿Qué encontró la ardilla Susi?",
+          "options": ["Una manzana", "Una avellana gigante", "Una piedra"],
+          "answer": 1,
+          "keywords": ["avellana gigante"]
+        },
+        {
+          "icon": "🌳",
+          "question": "¿Dónde vive Susi?",
+          "options": ["En un bosque de colores", "En la playa", "En el desierto"],
+          "answer": 0,
+          "keywords": ["bosque lleno de colores"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "separator": "---STORY---",
+      "title": "El robot bailarín",
+      "image": "img002",
+      "image_prompt": "Cute friendly robot dancing with musical notes around, bright playful colors, glowing accents, cartoon style for kids, joyful energetic scene",
+      "text": [
+        "Robi es un robot muy simpático al que le encanta la música.",
+        "Cuando escucha una canción, empieza a bailar y aparecen notas musicales brillantes a su alrededor.",
+        "Robi demuestra que todos podemos divertirnos si seguimos el ritmo del corazón."
+      ],
+      "activities": [
+        {
+          "icon": "🤖",
+          "question": "¿Qué le gusta hacer a Robi?",
+          "options": ["Dormir", "Bailar", "Correr"],
+          "answer": 1,
+          "keywords": ["empieza a bailar"]
+        },
+        {
+          "icon": "🎵",
+          "question": "¿Qué aparece alrededor del robot?",
+          "options": ["Agua", "Comida", "Notas musicales"],
+          "answer": 2,
+          "keywords": ["notas musicales"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "separator": "---STORY---",
+      "title": "La nube sonriente",
+      "image": "img003",
+      "image_prompt": "A fluffy cloud in the sky with a smiling face, pastel sky colors, rainbow highlights, soft children’s book illustration style, warm and happy atmosphere",
+      "text": [
+        "En el cielo de color pastel vive una nube muy suave y esponjosa.",
+        "Ella siempre tiene una sonrisa en su cara y tiene reflejos de arcoíris.",
+        "Cuando la nube está feliz, el día se siente cálido y lleno de alegría."
+      ],
+      "activities": [
+        {
+          "icon": "☁️",
+          "question": "¿Qué tiene la nube en su cara?",
+          "options": ["Una sonrisa", "Gafas", "Una gorra"],
+          "answer": 0,
+          "keywords": ["una sonrisa"]
+        },
+        {
+          "icon": "🌈",
+          "question": "¿De qué color son sus reflejos?",
+          "options": ["Solo negros", "De arcoíris", "No tiene"],
+          "answer": 1,
+          "keywords": ["reflejos de arcoíris"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "separator": "---STORY---",
+      "title": "El dragón pastelero",
+      "image": "img004",
+      "image_prompt": "Small friendly dragon wearing a chef hat baking a cake, colorful kitchen scene, bright candy-like colors, cute cartoon illustration for children",
+      "text": [
+        "Darío es un pequeño dragón que sueña con ser el mejor cocinero del mundo.",
+        "Se puso su gorro de chef y está preparando un pastel delicioso en su cocina colorida.",
+        "¡Tengan cuidado! A veces, cuando se emociona, sale un poquito de fuego de su nariz."
+      ],
+      "activities": [
+        {
+          "icon": "🐉",
+          "question": "¿Qué lleva Darío en la cabeza?",
+          "options": ["Una corona", "Un gorro de chef", "Un casco"],
+          "answer": 1,
+          "keywords": ["gorro de chef"]
+        },
+        {
+          "icon": "🎂",
+          "question": "¿Qué está cocinando el dragón?",
+          "options": ["Una sopa", "Un pastel", "Una ensalada"],
+          "answer": 1,
+          "keywords": ["preparando un pastel"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "separator": "---STORY---",
+      "title": "El búho sabio",
+      "image": "img005",
+      "image_prompt": "Wise owl with glasses watching a sunrise over hills, warm sunrise palette, soft glowing sky, cozy storybook illustration style",
+      "text": [
+        "El señor Búho usa sus gafas para ver mejor el hermoso amanecer sobre las colinas.",
+        "Se queda despierto toda la noche para observar cómo el cielo cambia de color.",
+        "Él sabe que cada nuevo día es una oportunidad para aprender algo nuevo."
+      ],
+      "activities": [
+        {
+          "icon": "👓",
+          "question": "¿Qué usa el búho para ver mejor?",
+          "options": ["Binoculares", "Gafas", "Lupa"],
+          "answer": 1,
+          "keywords": ["usa sus gafas"]
+        },
+        {
+          "icon": "🌅",
+          "question": "¿Qué momento del día está observando?",
+          "options": ["El amanecer", "La tormenta", "La noche oscura"],
+          "answer": 0,
+          "keywords": ["ver el hermoso amanecer"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "separator": "---STORY---",
+      "title": "El pincel mágico",
+      "image": "img006",
+      "image_prompt": "A magical paintbrush painting a rainbow arch, sparkling colors, glowing rainbow paint, whimsical fantasy children’s illustration",
+      "text": [
+        "Había una vez un pincel que no necesitaba pintura porque era mágico.",
+        "Con un solo movimiento, dibujó un arcoíris brillante en el aire con colores que brillaban.",
+        "Todo lo que este pincel toca se llena de magia y de mucha alegría."
+      ],
+      "activities": [
+        {
+          "icon": "🖌️",
+          "question": "¿Qué dibujó el pincel mágico?",
+          "options": ["Una casa", "Un arcoíris", "Un coche"],
+          "answer": 1,
+          "keywords": ["dibujó un arcoíris"]
+        },
+        {
+          "icon": "✨",
+          "question": "¿Cómo son los colores del pincel?",
+          "options": ["Aburridos", "Brillantes", "Transparentes"],
+          "answer": 1,
+          "keywords": ["colores que brillaban"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "separator": "---STORY---",
+      "title": "La gata espacial",
+      "image": "img007",
+      "image_prompt": "Cute cat in a small space suit sitting on the moon surface with stars, bright cosmic colors, playful galaxy tones, cartoon style for kids",
+      "text": [
+        "Luna es una gatita valiente que viajó al espacio en su traje especial.",
+        "Ahora está sentada en la Luna mirando las estrellas y los colores de la galaxia.",
+        "Ella es la primera gata en dejar sus huellas en el polvo lunar."
+      ],
+      "activities": [
+        {
+          "icon": "🐱",
+          "question": "¿Dónde está sentada la gatita?",
+          "options": ["En el tejado", "En la Luna", "En un árbol"],
+          "answer": 1,
+          "keywords": ["sentada en la Luna"]
+        },
+        {
+          "icon": "👩‍🚀",
+          "question": "¿Qué lleva puesto Luna?",
+          "options": ["Un traje espacial", "Un vestido", "Un pijama"],
+          "answer": 0,
+          "keywords": ["traje especial"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "separator": "---STORY---",
+      "title": "La tortuga veloz",
+      "image": "img008",
+      "image_prompt": "A turtle with a small racing flag on its shell, vivid greens and reds, sunny playful background, energetic children’s illustration",
+      "text": [
+        "Tuga es una tortuga que ama las carreras y siempre lleva una bandera en su caparazón.",
+        "Aunque camina despacio, ella nunca se rinde y siempre llega a la meta con una sonrisa.",
+        "Tuga nos enseña que lo importante no es ser el más rápido, sino disfrutar el camino."
+      ],
+      "activities": [
+        {
+          "icon": "🐢",
+          "question": "¿Qué lleva la tortuga en su caparazón?",
+          "options": ["Una mochila", "Una bandera de carreras", "Una flor"],
+          "answer": 1,
+          "keywords": ["lleva una bandera"]
+        },
+        {
+          "icon": "🏁",
+          "question": "¿Qué actividad le gusta a Tuga?",
+          "options": ["Las carreras", "Dormir la siesta", "Nadar"],
+          "answer": 0,
+          "keywords": ["ama las carreras"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "separator": "---STORY---",
+      "title": "Un dulce encuentro",
+      "image": "img009",
+      "image_prompt": "Friendly bear sharing a jar of honey with a cute bee, warm golden colors, sweet soft cartoon style, cheerful kids illustration",
+      "text": [
+        "Bernardo es un oso grande y tierno que encontró un tarro lleno de miel dorada.",
+        "En lugar de comerla solo, invitó a su amiga la abeja a compartir el festín.",
+        "Juntos descubrieron que la miel sabe mucho mejor cuando se disfruta con amigos."
+      ],
+      "activities": [
+        {
+          "icon": "🐻",
+          "question": "¿Qué encontró el oso Bernardo?",
+          "options": ["Un pez", "Un tarro de miel", "Una manzana"],
+          "answer": 1,
+          "keywords": ["tarro lleno de miel"]
+        },
+        {
+          "icon": "🐝",
+          "question": "¿Con quién compartió su comida?",
+          "options": ["Con un conejo", "Con una abeja", "Con otro oso"],
+          "answer": 1,
+          "keywords": ["invitó a su amiga la abeja"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "separator": "---STORY---",
+      "title": "El cohete de cartón",
+      "image": "img010",
+      "image_prompt": "A child inside a cardboard rocket ship flying through stars and planets, colorful space background, imaginative playful tones, children’s storybook style",
+      "text": [
+        "Mateo construyó un cohete con una caja de cartón y mucha imaginación.",
+        "Con un ¡pum!, despegó hacia las estrellas para visitar planetas lejanos y coloridos.",
+        "Para Mateo, su habitación es un universo entero lleno de aventuras espaciales."
+      ],
+      "activities": [
+        {
+          "icon": "🚀",
+          "question": "¿De qué está hecho el cohete de Mateo?",
+          "options": ["De metal", "De cartón", "De plástico"],
+          "answer": 1,
+          "keywords": ["caja de cartón"]
+        },
+        {
+          "icon": "⭐",
+          "question": "¿Hacia dónde viaja Mateo?",
+          "options": ["Hacia el fondo del mar", "Hacia las estrellas", "Hacia el parque"],
+          "answer": 1,
+          "keywords": ["despegó hacia las estrellas"]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "separator": "---STORY---",
+      "title": "Leonardo el amable",
+      "image": "img011",
+      "image_prompt": "Cute lion with a big mane helping a small mouse, warm savanna colors, soft friendly cartoon illustration, gentle mood",
+      "text": [
+        "Leonardo es un león con una melena muy grande y un corazón aún mayor.",
+        "Un día, un ratoncito necesitaba ayuda y Leonardo lo cuidó con mucha delicadeza.",
+        "En la sabana, todos saben que Leonardo es el león más amable y protector."
+      ],
+      "activities": [
+        {
+          "icon": "🦁",
+          "question": "¿A quién ayudó el león?",
+          "options": ["A un elefante", "A un ratoncito", "A una jirafa"],
+          "answer": 1,
+          "keywords": ["ratoncito necesitaba ayuda"]
+        },
+        {
+          "icon": "💛",
+          "question": "¿Cómo es el corazón de Leonardo?",
+          "options": ["Pequeño", "Muy grande", "De piedra"],
+          "answer": 1,
+          "keywords": ["corazón aún mayor"]
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "separator": "---STORY---",
+      "title": "Pipo en la nieve",
+      "image": "img012",
+      "image_prompt": "Cute penguin wearing a patterned scarf in a snowy landscape, cool blues and bright scarf colors, cozy winter children’s illustration",
+      "text": [
+        "Pipo es un pingüino que vive en un lugar donde siempre hay mucha nieve.",
+        "Él usa una bufanda con dibujos de colores para mantenerse abrigado y feliz.",
+        "A Pipo le encanta deslizarse por el hielo y jugar con sus hermanos bajo el sol frío."
+      ],
+      "activities": [
+        {
+          "icon": "🧣",
+          "question": "¿Qué usa Pipo para el frío?",
+          "options": ["Una bufanda", "Unos guantes", "Botas"],
+          "answer": 0,
+          "keywords": ["usa una bufanda"]
+        },
+        {
+          "icon": "❄️",
+          "question": "¿Dónde vive el pingüino?",
+          "options": ["En la selva", "En un lugar con nieve", "En el desierto"],
+          "answer": 1,
+          "keywords": ["siempre hay mucha nieve"]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "separator": "---STORY---",
+      "title": "El paraguas brillante",
+      "image": "img013",
+      "image_prompt": "An umbrella floating with sparkles around it, rainbow umbrella colors, magical glowing sparkles, whimsical cartoon style",
+      "text": [
+        "Este no es un paraguas común, es un paraguas de colores que flota solo.",
+        "A su alrededor siempre hay chispas mágicas y brillos que iluminan el camino.",
+        "Cuando lo abres, la lluvia se convierte en gotas de luz de muchos colores."
+      ],
+      "activities": [
+        {
+          "icon": "☂️",
+          "question": "¿Qué hace el paraguas?",
+          "options": ["Se hunde", "Flota solo", "Se rompe"],
+          "answer": 1,
+          "keywords": ["flota solo"]
+        },
+        {
+          "icon": "✨",
+          "question": "¿Qué hay alrededor del paraguas?",
+          "options": ["Barro", "Chispas mágicas", "Hojas secas"],
+          "answer": 1,
+          "keywords": ["chispas mágicas"]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "separator": "---STORY---",
+      "title": "La vida de una semilla",
+      "image": "img014",
+      "image_prompt": "Small seed under the ground sprouting with leaves, fresh greens and browns, educational nature illustration for children, bright and hopeful",
+      "text": [
+        "Debajo de la tierra, una pequeña semilla despertó con muchas ganas de crecer.",
+        "Bebió un poco de agua y pronto le salieron sus primeras hojitas verdes.",
+        "Con el sol y el aire, la semilla se prepara para ser una planta fuerte y hermosa."
+      ],
+      "activities": [
+        {
+          "icon": "🌱",
+          "question": "¿Qué le salió a la semilla?",
+          "options": ["Hojitas verdes", "Flores rojas", "Frutos"],
+          "answer": 0,
+          "keywords": ["hojitas verdes"]
+        },
+        {
+          "icon": "💧",
+          "question": "¿Qué bebió la semilla para despertar?",
+          "options": ["Leche", "Agua", "Zumo"],
+          "answer": 1,
+          "keywords": ["Bebió un poco de agua"]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "separator": "---STORY---",
+      "title": "Toby el astronauta",
+      "image": "img015",
+      "image_prompt": "Happy dog inside a small spaceship, colorful sci-fi tones, playful stars, cartoon children’s illustration",
+      "text": [
+        "Toby es un perro muy juguetón que viaja en una nave espacial por el universo.",
+        "Le gusta mirar por la ventana y ver cómo brillan las estrellas de colores.",
+        "Toby busca un planeta nuevo donde los huesos crezcan en los árboles."
+      ],
+      "activities": [
+        {
+          "icon": "🐶",
+          "question": "¿Quién viaja en la nave espacial?",
+          "options": ["Un gato", "Un perro", "Un pájaro"],
+          "answer": 1,
+          "keywords": ["Toby es un perro"]
+        },
+        {
+          "icon": "🚀",
+          "question": "¿Por dónde viaja Toby?",
+          "options": ["Por el océano", "Por el universo", "Por el parque"],
+          "answer": 1,
+          "keywords": ["viaja en una nave espacial"]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "separator": "---STORY---",
+      "title": "La abeja y la flor",
+      "image": "img016",
+      "image_prompt": "Busy bee flying over a large flower, vibrant flower petals, sunny sky, energetic cheerful kids style",
+      "text": [
+        "Bibi es una abeja muy trabajadora que vuela sobre una flor gigante.",
+        "Ella recoge el polen con mucho cuidado mientras el sol brilla en el cielo azul.",
+        "Gracias a Bibi y sus amigas, las flores del jardín siempre están felices."
+      ],
+      "activities": [
+        {
+          "icon": "🐝",
+          "question": "¿Cómo se llama la abeja?",
+          "options": ["Bibi", "Susi", "Lola"],
+          "answer": 0,
+          "keywords": ["Bibi"]
+        },
+        {
+          "icon": "🌻",
+          "question": "¿Sobre qué vuela la abeja?",
+          "options": ["Sobre una piedra", "Sobre una flor gigante", "Sobre un árbol"],
+          "answer": 1,
+          "keywords": ["sobre una flor gigante"]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "separator": "---STORY---",
+      "title": "El tren de las formas",
+      "image": "img017",
+      "image_prompt": "Toy train with different shaped wagons, bright primary colors, playful learning illustration for children",
+      "text": [
+        "El tren de juguete tiene vagones de muchas formas y colores brillantes.",
+        "Cada vagón lleva una sorpresa diferente mientras recorre las vías de la habitación.",
+        "Es un tren muy especial que ayuda a los niños a aprender mientras juegan."
+      ],
+      "activities": [
+        {
+          "icon": "🚂",
+          "question": "¿Qué tiene el tren de juguete?",
+          "options": ["Alas", "Vagones de muchas formas", "Ruedas de madera"],
+          "answer": 1,
+          "keywords": ["vagones de muchas formas"]
+        },
+        {
+          "icon": "🎨",
+          "question": "¿Cómo son los colores del tren?",
+          "options": ["Oscuros", "Brillantes", "Solo blanco"],
+          "answer": 1,
+          "keywords": ["colores brillantes"]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "separator": "---STORY---",
+      "title": "Bibi la ballena",
+      "image": "img018",
+      "image_prompt": "Big whale swimming with small fishes in the ocean, rich blue ocean tones, colorful fish, soft underwater cartoon style",
+      "text": [
+        "Bibi es una ballena enorme y azul que vive en el fondo del océano.",
+        "A ella le gusta nadar rodeada de muchos pececitos de colores que son sus amigos.",
+        "Juntos exploran los arrecifes y juegan a las escondidas entre las burbujas."
+      ],
+      "activities": [
+        {
+          "icon": "🐋",
+          "question": "¿Dónde vive la ballena Bibi?",
+          "options": ["En un lago", "En el océano", "En un río"],
+          "answer": 1,
+          "keywords": ["fondo del océano"]
+        },
+        {
+          "icon": "🐟",
+          "question": "¿Con quién le gusta nadar?",
+          "options": ["Con barcos", "Con pececitos de colores", "Sola"],
+          "answer": 1,
+          "keywords": ["rodeada de muchos pececitos"]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "separator": "---STORY---",
+      "title": "El conejo comelón",
+      "image": "img019",
+      "image_prompt": "Cute rabbit eating a giant carrot, bright orange carrot, green meadow, joyful children’s illustration",
+      "text": [
+        "Copito es un conejo con el pelaje muy suave que vive en una pradera verde.",
+        "Hoy ha encontrado una zanahoria gigante de color naranja y está muy emocionado.",
+        "A Copito le encanta masticar sus vegetales para crecer fuerte y sano."
+      ],
+      "activities": [
+        {
+          "icon": "🐇",
+          "question": "¿Qué está comiendo el conejo?",
+          "options": ["Una manzana", "Una zanahoria gigante", "Una lechuga"],
+          "answer": 1,
+          "keywords": ["zanahoria gigante"]
+        },
+        {
+          "icon": "🥕",
+          "question": "¿De qué color es la zanahoria?",
+          "options": ["Azul", "Naranja", "Morada"],
+          "answer": 1,
+          "keywords": ["color naranja"]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "separator": "---STORY---",
+      "title": "El dinosaurio bailarín",
+      "image": "img020",
+      "image_prompt": "Friendly dinosaur wearing a tutu and dancing, pastel tutu colors, playful prehistoric scene, silly cartoon style",
+      "text": [
+        "Dino es un tiranosaurio muy especial porque le encanta el ballet.",
+        "Se puso su tutú de colores pastel y practica sus saltos en la selva.",
+        "Todos los animales se reúnen para ver su baile y aplauden con mucha alegría."
+      ],
+      "activities": [
+        {
+          "icon": "🦖",
+          "question": "¿Qué lleva puesto el dinosaurio?",
+          "options": ["Un tutú", "Un sombrero", "Unos pantalones"],
+          "answer": 0,
+          "keywords": ["puso su tutú"]
+        },
+        {
+          "icon": "💃",
+          "question": "¿Qué tipo de baile practica Dino?",
+          "options": ["Salsa", "Ballet", "Rock"],
+          "answer": 1,
+          "keywords": ["le encanta el ballet"]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "separator": "---STORY---",
+      "title": "La estrella viajera",
+      "image": "img021",
+      "image_prompt": "A small star sitting on a tree branch, glowing golden light, dreamy night colors, magical bedtime illustration",
+      "text": [
+        "Una pequeña estrella bajó del cielo y se sentó en la rama de un árbol.",
+        "Ella brilla con una luz dorada y suave mientras el bosque duerme tranquilo.",
+        "La estrella espera a que salga el sol para volver a su casa en el espacio."
+      ],
+      "activities": [
+        {
+          "icon": "⭐",
+          "question": "¿Dónde se sentó la estrella?",
+          "options": ["En el suelo", "En la rama de un árbol", "En una casa"],
+          "answer": 1,
+          "keywords": ["rama de un árbol"]
+        },
+        {
+          "icon": "✨",
+          "question": "¿De qué color es su luz?",
+          "options": ["Luz dorada", "Luz roja", "Luz verde"],
+          "answer": 0,
+          "keywords": ["luz dorada"]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "separator": "---STORY---",
+      "title": "Kiko el camaleón",
+      "image": "img022",
+      "image_prompt": "A chameleon sitting on a large leaf, bright tropical colors, friendly cartoon style for kids",
+      "text": [
+        "Kiko es un camaleón que vive en una hoja gigante de la selva tropical.",
+        "Tiene colores muy brillantes que le ayudan a esconderse de los demás animales.",
+        "Kiko es muy paciente y puede quedarse quieto durante mucho tiempo."
+      ],
+      "activities": [
+        {
+          "icon": "🦎",
+          "question": "¿Cómo se llama el camaleón?",
+          "options": ["Kiko", "Pepe", "Tito"],
+          "answer": 0,
+          "keywords": ["Kiko"]
+        },
+        {
+          "icon": "🍃",
+          "question": "¿Dónde está sentado Kiko?",
+          "options": ["En una piedra", "En una hoja gigante", "En el agua"],
+          "answer": 1,
+          "keywords": ["hoja gigante"]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "separator": "---STORY---",
+      "title": "La bicicleta de Beto",
+      "image": "img023",
+      "image_prompt": "A bicycle with training wheels, colorful park background, cheerful sunny palette, children’s illustration style",
+      "text": [
+        "Beto tiene una bicicleta nueva con dos rueditas pequeñas para no caerse.",
+        "Le gusta ir al parque cuando sale el sol para pedalear muy rápido por el camino.",
+        "Cada día, Beto aprende a mantener mejor el equilibrio y se divierte mucho."
+      ],
+      "activities": [
+        {
+          "icon": "🚲",
+          "question": "¿Qué tiene la bicicleta de Beto?",
+          "options": ["Un motor", "Rueditas pequeñas", "Alas"],
+          "answer": 1,
+          "keywords": ["rueditas pequeñas"]
+        },
+        {
+          "icon": "🌳",
+          "question": "¿A dónde va Beto con su bicicleta?",
+          "options": ["A la escuela", "Al parque", "Al mercado"],
+          "answer": 1,
+          "keywords": ["ir al parque"]
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "separator": "---STORY---",
+      "title": "Las flores del alfabeto",
+      "image": "img024",
+      "image_prompt": "Flowers with distinct letters on their large petals, rainbow flower colors, educational playful design for kids",
+      "text": [
+        "En un jardín mágico, las flores tienen letras escritas en sus pétalos de colores.",
+        "Cada flor ayuda a los niños a aprender el abecedario de una forma divertida.",
+        "Si cuidas bien las flores, ellas brillan y te enseñan palabras nuevas."
+      ],
+      "activities": [
+        {
+          "icon": "🌸",
+          "question": "¿Qué tienen las flores en sus pétalos?",
+          "options": ["Números", "Letras", "Dibujos"],
+          "answer": 1,
+          "keywords": ["letras escritas"]
+        },
+        {
+          "icon": "🌈",
+          "question": "¿De qué color son las flores?",
+          "options": ["Blancas", "De colores de arcoíris", "Solo grises"],
+          "answer": 1,
+          "keywords": ["arcoíris"]
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "separator": "---STORY---",
+      "title": "Mimi y la lana",
+      "image": "img025",
+      "image_prompt": "Kitten playing with a tangled ball of yarn, soft pastel yarn colors, cozy home illustration, cute cartoon style",
+      "text": [
+        "Mimi es una gatita pequeña que encontró una bola de lana muy suave.",
+        "Empezó a jugar con ella y terminó toda enredada entre los hilos de colores.",
+        "Para Mimi, cualquier objeto en casa puede ser el mejor juguete del mundo."
+      ],
+      "activities": [
+        {
+          "icon": "🐱",
+          "question": "¿Con qué está jugando Mimi?",
+          "options": ["Con una pelota", "Con una bola de lana", "Con un ratón"],
+          "answer": 1,
+          "keywords": ["bola de lana"]
+        },
+        {
+          "icon": "🧶",
+          "question": "¿Cómo terminó la gatita?",
+          "options": ["Dormida", "Toda enredada", "Limpia"],
+          "answer": 1,
+          "keywords": ["toda enredada"]
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "separator": "---STORY---",
+      "title": "El árbol de la música",
+      "image": "img026",
+      "image_prompt": "A tree with musical notes instead of leaves, colorful musical notes, whimsical fantasy illustration for children",
+      "text": [
+        "En el bosque encantado hay un árbol que no tiene hojas, sino notas musicales.",
+        "Cuando el viento sopla, el árbol toca una melodía suave que hace dormir a los animales.",
+        "Es el lugar favorito de los pájaros porque allí aprenden a cantar mejor."
+      ],
+      "activities": [
+        {
+          "icon": "🌳",
+          "question": "¿Qué tiene el árbol en lugar de hojas?",
+          "options": ["Frutas", "Notas musicales", "Flores"],
+          "answer": 1,
+          "keywords": ["notas musicales"]
+        },
+        {
+          "icon": "🎵",
+          "question": "¿Cuándo toca música el árbol?",
+          "options": ["Cuando llueve", "Cuando el viento sopla", "Nunca"],
+          "answer": 1,
+          "keywords": ["viento sopla"]
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "separator": "---STORY---",
+      "title": "Bot el robot bombero",
+      "image": "img027",
+      "image_prompt": "A robot holding a water hose and wearing a helmet, bright safety colors, playful futuristic cartoon style",
+      "text": [
+        "Bot es un robot valiente que usa un casco y lleva una manguera de agua.",
+        "Su trabajo es proteger a todos y apagar cualquier fuego que aparezca.",
+        "Bot siempre está listo para ayudar con sus herramientas modernas y brillantes."
+      ],
+      "activities": [
+        {
+          "icon": "🤖",
+          "question": "¿Qué lleva Bot en la mano?",
+          "options": ["Una escoba", "Una manguera de agua", "Un martillo"],
+          "answer": 1,
+          "keywords": ["manguera de agua"]
+        },
+        {
+          "icon": "⛑️",
+          "question": "¿Qué usa Bot en su cabeza?",
+          "options": ["Un sombrero", "Un casco", "Una corona"],
+          "answer": 1,
+          "keywords": ["usa un casco"]
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "separator": "---STORY---",
+      "title": "Don Reloj Gruñón",
+      "image": "img028",
+      "image_prompt": "An alarm clock with a funny grumpy face, bold bright colors, silly cartoon expression, kids illustration",
+      "text": [
+        "Don Reloj es un despertador que siempre tiene una cara un poco gruñona por la mañana.",
+        "Le da pereza sonar tan temprano, pero sabe que debe despertar a los niños para ir a clase.",
+        "Aunque parece enfadado, en realidad es muy responsable y nunca llega tarde."
+      ],
+      "activities": [
+        {
+          "icon": "⏰",
+          "question": "¿Cómo es la cara del reloj?",
+          "options": ["Feliz", "Gruñona", "Triste"],
+          "answer": 1,
+          "keywords": ["cara un poco gruñona"]
+        },
+        {
+          "icon": "🏫",
+          "question": "¿Para qué despierta el reloj a los niños?",
+          "options": ["Para comer", "Para ir a clase", "Para jugar"],
+          "answer": 1,
+          "keywords": ["ir a clase"]
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "separator": "---STORY---",
+      "title": "La nube confundida",
+      "image": "img029",
+      "image_prompt": "A small cloud with a confused expression, soft pastel sky colors, cute emotional cartoon style",
+      "text": [
+        "Nubita es una nube pequeña que hoy se siente un poco confundida.",
+        "No sabe si debe llover para mojar las flores o dejar que el sol brille.",
+        "A veces está bien no saber qué hacer, solo necesita un poco de tiempo."
+      ],
+      "activities": [
+        {
+          "icon": "☁️",
+          "question": "¿Cómo se siente Nubita hoy?",
+          "options": ["Enfadada", "Confundida", "Cansada"],
+          "answer": 1,
+          "keywords": ["se siente un poco confundida"]
+        },
+        {
+          "icon": "❓",
+          "question": "¿Qué duda tiene la nube?",
+          "options": ["Si debe llover", "Si debe comer", "Si debe dormir"],
+          "answer": 0,
+          "keywords": ["si debe llover"]
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "separator": "---STORY---",
+      "title": "El zapato en el parque",
+      "image": "img030",
+      "image_prompt": "A sneaker shoe sitting in a park setting, colorful sporty design, bright outdoor children’s illustration",
+      "text": [
+        "Una zapatilla de deporte muy colorida se quedó olvidada en el césped del parque.",
+        "Es una zapatilla muy veloz que ha corrido muchas carreras y saltado muchos charcos.",
+        "Pronto, su dueño volverá a buscarla para seguir viviendo aventuras juntos."
+      ],
+      "activities": [
+        {
+          "icon": "👟",
+          "question": "¿Qué objeto se quedó olvidado?",
+          "options": ["Un juguete", "Una zapatilla", "Una gorra"],
+          "answer": 1,
+          "keywords": ["zapatilla de deporte"]
+        },
+        {
+          "icon": "🌳",
+          "question": "¿Dónde está la zapatilla?",
+          "options": ["En una casa", "En el parque", "En la playa"],
+          "answer": 1,
+          "keywords": ["césped del parque"]
+        }
+      ]
+    }
+  ]
+}
