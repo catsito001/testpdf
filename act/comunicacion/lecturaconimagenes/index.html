@@ -74,123 +74,197 @@
         <label class="block text-sm font-bold text-gray-600 mb-1">Pegar JSON (data)</label>
         <textarea id="json-input" rows="6"
             placeholder='{"categories":[...]}'
-            class="w-full border-2 border-blue-200 rounded-xl p-3 focus:outline-none focus:border-blue-400">{
-  "categories":[
+            class="w-full border-2 border-blue-200 rounded-xl p-3 focus:outline-none focus:border-blue-400">
+Actúa como experto en pedagogía infantil, alfabetización inicial y diseño de material educativo visual.
+
+Tu tarea es generar material educativo visual y textual para niños en etapa de alfabetización inicial mediante asociación palabra-imagen.
+
+OBJETIVO:
+Crear tarjetas educativas visuales donde un personaje guía acompaña el aprendizaje de lectura.
+
+INPUTS (VARIABLES DE ENTRADA)
+
+INPUT 1 — PERSONAJE
+(piku un personaje similar a picachu de pokemon no lo hagas igual solo parecido)
+
+
+
+Este campo contiene la descripción oficial completa del personaje.
+
+Debes usar esta descripción para construir TODOS los mainImage.prompt.
+
+El personaje debe describirse visualmente de forma consistente en cada prompt de imagen.
+
+Nunca modificar la identidad del personaje.
+
+Nunca reemplazar el personaje.
+
+Siempre integrarlo naturalmente en la escena educativa.
+
+INPUT 2 — TEMAS EDUCATIVOS
+(temas que todo niño necesita aprender)
+
+
+
+Debes generar las categorías usando exclusivamente estos temas o subtemas derivados.
+
+SALIDA REQUERIDA
+
+Debes generar EXACTAMENTE 2 cosas en este orden:
+
+PARTE 1:
+Un objeto JSON educativo completo.
+
+PARTE 2:
+Una lista de TODOS los prompts de imágenes utilizados, en el mismo orden de los IDs, con UN prompt por línea.
+
+No mezclar ambas partes.
+No agregar explicaciones.
+No usar markdown.
+
+REGLAS DEL JSON
+
+Usa EXACTAMENTE esta estructura:
+
+{
+  "categories": [
     {
-      "id":"escuela",
-      "title":"La Escuela",
-      "cards":[
+      "id": "string",
+      "title": "string",
+      "cards": [
         {
-          "id":1,
-          "mainImage":{"value":"img001","prompt":"una maestra leyendo un libro en el aula, ilustración infantil"},
-          "segments":[
-            {"type":"text","value":"La"},
-            {"type":"image","value":"img002","meaning":"maestra"},
-            {"type":"text","value":"lee"},
-            {"type":"text","value":"un"},
-            {"type":"image","value":"img003","meaning":"libro"}
-          ]
-        },
-        {
-          "id":2,
-          "mainImage":{"value":"img004","prompt":"un niño escribiendo en su cuaderno en la escuela, ilustración infantil"},
-          "segments":[
-            {"type":"text","value":"El"},
-            {"type":"image","value":"img005","meaning":"niño"},
-            {"type":"text","value":"escribe"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"su"},
-            {"type":"image","value":"img006","meaning":"cuaderno"}
-          ]
-        },
-        {
-          "id":3,
-          "mainImage":{"value":"img007","prompt":"una niña estudiando en la escuela"},
-          "segments":[
-            {"type":"text","value":"La"},
-            {"type":"image","value":"img008","meaning":"niña"},
-            {"type":"text","value":"estudia"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"la"},
-            {"type":"image","value":"img009","meaning":"escuela"}
-          ]
-        }
-      ]
-    },
-    {
-      "id":"casa",
-      "title":"La Casa",
-      "cards":[
-        {
-          "id":1,
-          "mainImage":{"value":"img010","prompt":"una familia en la sala de su casa"},
-          "segments":[
-            {"type":"text","value":"Nuestra"},
-            {"type":"image","value":"img011","meaning":"familia"},
-            {"type":"text","value":"está"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"la"},
-            {"type":"image","value":"img012","meaning":"casa"}
-          ]
-        },
-        {
-          "id":2,
-          "mainImage":{"value":"img034","prompt":"una mamá cocinando en casa"},
-          "segments":[
-            {"type":"text","value":"La"},
-            {"type":"image","value":"img035","meaning":"mamá"},
-            {"type":"text","value":"cocina"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"la"},
-            {"type":"image","value":"img036","meaning":"cocina"}
-          ]
-        },
-        {
-          "id":3,
-          "mainImage":{"value":"img037","prompt":"un niño durmiendo en su cama"},
-          "segments":[
-            {"type":"text","value":"El"},
-            {"type":"image","value":"img038","meaning":"niño"},
-            {"type":"text","value":"duerme"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"su"},
-            {"type":"image","value":"img039","meaning":"cama"}
-          ]
-        }
-      ]
-    },
-    {
-      "id":"parque",
-      "title":"El Parque",
-      "cards":[
-        {
-          "id":1,
-          "mainImage":{"value":"img061","prompt":"un niño jugando con una pelota en el parque"},
-          "segments":[
-            {"type":"text","value":"El"},
-            {"type":"image","value":"img062","meaning":"niño"},
-            {"type":"text","value":"juega"},
-            {"type":"text","value":"con"},
-            {"type":"text","value":"la"},
-            {"type":"image","value":"img063","meaning":"pelota"}
-          ]
-        },
-        {
-          "id":2,
-          "mainImage":{"value":"img064","prompt":"una familia caminando en el parque"},
-          "segments":[
-            {"type":"text","value":"La"},
-            {"type":"image","value":"img065","meaning":"familia"},
-            {"type":"text","value":"camina"},
-            {"type":"text","value":"en"},
-            {"type":"text","value":"el"},
-            {"type":"image","value":"img066","meaning":"parque"}
+          "id": number,
+          "mainImage": {
+            "value": "imgXXX",
+            "prompt": "prompt completo"
+          },
+          "segments": [
+            {
+              "type": "text",
+              "value": "palabra"
+            },
+            {
+              "type": "image",
+              "value": "palabra",
+              "meaning": "solo si type=image"
+            }
           ]
         }
       ]
     }
   ]
 }
+
+REGLAS DEL PERSONAJE
+
+• El personaje SOLO puede aparecer en mainImage.prompt
+• El personaje NUNCA puede aparecer en segments image
+• Nunca usar el personaje en meaning
+
+IMPORTANTE:
+
+Cada mainImage.prompt debe incluir una descripción visual clara del personaje basada en {CHARACTER_DESCRIPTION} para asegurar consistencia en la generación de imágenes.
+
+REGLAS DE SEGMENTS
+
+• Cada card debe tenerrandom entre 4 y 7 segments puedes variar   
+• Cada segment debe contener UNA sola palabra
+• 2 image segments por card
+• los segments deben tener sentido formando la oracion  ejemplo
+"segments": [
+{ "type": "text", "value": "El" },
+{ "type": "image", "value": "img026", "meaning": "libro" },
+{ "type": "text", "value": "esta" },
+{ "type": "text", "value": "en" },
+{ "type": "text", "value": "la" },
+{ "type": "image", "value": "img027", "meaning": "mesa" }
+]
+forman la oracion completa sin perder sentido.
+
+
+image segments SOLO para:
+
+sustantivos visuales
+o
+adjetivos visuales
+
+text segments SOLO para:
+
+artículos
+verbos
+preposiciones
+conectores
+
+REGLAS DE MAIN IMAGE PROMPT
+
+Cada mainImage.prompt debe incluir:
+
+• descripción física del personaje basada en {CHARACTER_DESCRIPTION}
+• escena completa
+• contexto educativo
+• estilo ilustración infantil anime
+• colores suaves
+• ambiente educativo
+• amigable para niños
+• descripción clara la imagen debe representar exactamente lo que dice la oracion ejemplo(si la oracion habla de que esta corriendo comiendo pintando etc la imagen debe representar esa escena)
+
+REGLAS DE IMAGE PROMPTS (SEGMENTS)
+
+Cada imagen debe representar SOLO el objeto o adjetivo.
+
+Ejemplo:
+
+pelota roja, estilo ilustración infantil anime, fondo limpio, educativo
+para colores ejemplo rojo podrias dibujar un tarro de pintura color rojo... (ingeniatelas en todo caso) 
+
+REGLAS DE IDs
+
+Usar IDs correlativos sin repetir:
+
+img001
+img002
+img003
+...
+
+Incluye IDs para:
+
+mainImage
+y
+segments image
+
+CANTIDAD
+
+Generar:
+
+4 categorías
+4 cards por categoría 
+16 cards total 
+
+PARTE 2 — LISTA DE PROMPTS
+
+Después del JSON, escribir TODOS los prompts de imágenes usados.
+
+Ordenados por ID.
+
+Formato obligatorio:
+
+un prompt por línea
+sin numeración
+sin símbolos
+sin comillas
+sin texto extra
+
+SALIDA FINAL
+
+Debe ser exactamente:
+
+JSON válido
+
+luego
+
+lista de prompts newline
+
+Nada más.
 </textarea>
     </div>
 

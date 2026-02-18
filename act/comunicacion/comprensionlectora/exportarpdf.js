@@ -245,8 +245,14 @@ async function generarPDF(data,nombreArchivo = "Comprension_Lectora") {
                     const randomX = Math.random() * (maxX - minX) + minX;
                     pdf.text(footerText, randomX, pageHeight - 15);
                 }
+            
+                   // 👇 AQUÍ ESTÁ LA MAGIA
+    const blob = pdf.output('blob');
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+            
             })
-            .save();
+    
 
     } finally {
         document.body.removeChild(contenedor);
