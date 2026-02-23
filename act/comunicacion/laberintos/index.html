@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laberinto Mágico - Generador Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+        
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background-color: #FDFCF0; 
+            overflow: hidden; 
+        }
+
+        .bg-pattern { 
+            background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px); 
+            background-size: 24px 24px; 
+            opacity: 0.4; 
+        }
+
+        .maze-container {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border: 2px solid #334155;
+        }
+
+        .scroll-hidden::-webkit-scrollbar { display: none; }
+
+        .maze-cell {
+            box-sizing: border-box;
+        }
+        .wall-top { border-top: 2.5px solid #334155; }
+        .wall-right { border-right: 2.5px solid #334155; }
+        .wall-bottom { border-bottom: 2.5px solid #334155; }
+        .wall-left { border-left: 2.5px solid #334155; }
+
+        .arrow-guide {
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col">
+    <div class="fixed inset-0 bg-pattern -z-10"></div>
+
+    <!-- Vista de Configuración -->
+    <div id="setup-view" class="flex-1 flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
+        <div class="mb-4 bg-orange-400 p-4 rounded-3xl shadow-xl -rotate-3 inline-block text-white">
+            <i data-lucide="map" class="w-10 h-10"></i>
+        </div>
+        
+        <h1 class="text-3xl font-black text-indigo-900 mb-2">Laberinto Mágico</h1>
+        <p class="text-indigo-600/70 font-medium mb-6">Genera retos de atención con imágenes secuenciales</p>
+
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] shadow-2xl border-4 border-white w-full max-w-3xl space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input id="pdf-name-input" type="text" placeholder="Título del PDF (Ej: Mis Laberintos)" class="w-full bg-indigo-50/50 border-2 border-indigo-100 rounded-xl px-4 py-3 font-bold outline-none">
+                <button onclick="document.getElementById('zip-input').click()" class="w-full bg-emerald-100 text-emerald-700 font-bold px-4 py-3 rounded-xl border-2 border-emerald-200 flex items-center justify-center gap-2">
+                    <i data-lucide="image" class="w-5 h-5"></i>
+                    <span id="zip-status">Subir Imágenes (ZIP)</span>
+                </button>
+                <input type="file" id="zip-input" accept=".zip" class="hidden">
+            </div>
+
+            <div class="text-left">
+                <label class="block text-xs font-bold text-indigo-900/60 ml-2 mb-1">Configuración de Laberintos (JSON)</label>
+                <textarea id="json-input-area" rows="10" class="w-full bg-indigo-50/50 border-2 border-indigo-100 rounded-xl px-4 py-3 font-mono text-xs outline-none scroll-hidden">
+{
+  "exercises": [
+    {
+      "title": "Aventura en el Bosque",
+      "instruction": "Ayuda al conejito a llegar a su zanahoria",
+      "gridWidth": 10,
+      "gridHeight": 10,
+      "startImgId": "img001",
+      "endImgId": "img002"
+    },
+    {
+      "title": "Viaje Espacial",
+      "instruction": "Guía al astronauta hacia su cohete",
+      "gridWidth": 12,
+      "gridHeight": 12,
+      "startImgId": "img003",
+      "endImgId": "img004"
+    },
+    {
+      "title": "Bajo el Mar",
+      "instruction": "Ayuda al pececito a encontrar el cofre",
+      "gridWidth": 15,
+      "gridHeight": 15,
+      "startImgId": "img005",
+      "endImgId": "img006"
+    }
+  ]
+}
+                </textarea>
+            </div>
+
+            <button onclick="startApp()" class="w-full bg-indigo-600 text-white font-black text-lg py-4 rounded-2xl shadow-xl hover:bg-indigo-700 transition flex items-center justify-center gap-3">
+                GENERAR LABERINTOS
+                <i data-lucide="wand-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Vista Principal -->
+    <div id="main-view" class="hidden flex-1 flex flex-col overflow-hidden">
+        <header class="p-3 flex items-center justify-between bg-white/50 border-b-2 border-indigo-50">
+            <div class="flex items-center gap-2">
+                <i data-lucide="map" class="text-indigo-600 w-5 h-5"></i>
+                <h2 id="display-pdf-title" class="font-black text-indigo-900 text-sm">Título</h2>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="location.reload()" class="p-2 rounded-xl bg-white border-2 border-indigo-50 text-indigo-400 hover:text-indigo-600 transition"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+                <button onclick="generatePDF()" class="bg-pink-500 text-white font-black px-5 py-2 rounded-xl shadow-lg flex items-center gap-2 text-sm hover:bg-pink-600 transition">
+                    <i data-lucide="printer" class="w-4 h-4"></i> EXPORTAR PDF
+                </button>
+            </div>
+        </header>
+
+        <main id="preview-list" class="flex-1 overflow-y-auto p-8 flex flex-col items-center gap-12 scroll-hidden"></main>
+    </div>
+
+    <script>
+        let appData = null;
+        let imageMap = {};
+        let pdfTitle = "Laberinto Mágico";
+        const watermarkText = "FB: SUPER CURSOS TELGAM";
+        const footerText = "FB: SUPER CURSOS TELGAM   www.narrion.site";
+
+        document.getElementById('zip-input').onchange = (e) => {
+            document.getElementById('zip-status').innerText = e.target.files[0]?.name || 'Imágenes (ZIP)';
+        };
+
+        async function startApp() {
+            const zipFile = document.getElementById('zip-input').files[0];
+            const jsonText = document.getElementById('json-input-area').value;
+            const titleInput = document.getElementById('pdf-name-input').value;
+            
+            if(titleInput) pdfTitle = titleInput;
+
+            try {
+                appData = JSON.parse(jsonText);
+                if (zipFile) {
+                    const zip = await JSZip.loadAsync(zipFile);
+                    for (const [path, entry] of Object.entries(zip.files)) {
+                        if (!entry.dir) {
+                            const ext = path.split('.').pop().toLowerCase();
+                            if(['png', 'jpg', 'jpeg', 'webp'].includes(ext)) {
+                                const data = await entry.async("base64");
+                                const cleanName = path.split('/').pop().replace(/\.[^/.]+$/, "");
+                                const mimeType = `image/${ext === 'png' ? 'png' : 'jpeg'}`;
+                                imageMap[cleanName] = `data:${mimeType};base64,${data}`;
+                            }
+                        }
+                    }
+                }
+
+                document.getElementById('setup-view').classList.add('hidden');
+                document.getElementById('main-view').classList.remove('hidden');
+                document.getElementById('display-pdf-title').innerText = pdfTitle;
+                processAndRender();
+            } catch (e) { 
+                console.error(e);
+                alert("Error en los datos: " + e.message); 
+            }
+        }
+
+        function generateMaze(w, h) {
+            let maze = Array(h).fill().map(() => Array(w).fill().map(() => ({
+                visited: false,
+                walls: { top: true, right: true, bottom: true, left: true }
+            })));
+
+            let stack = [];
+            let current = { x: 0, y: 0 };
+            maze[0][0].visited = true;
+
+            let visitedCount = 1;
+            let totalCells = w * h;
+
+            while (visitedCount < totalCells) {
+                let neighbors = [];
+                let { x, y } = current;
+
+                if (y > 0 && !maze[y - 1][x].visited) neighbors.push({ x, y: y - 1, dir: 'top', opp: 'bottom' });
+                if (x < w - 1 && !maze[y][x + 1].visited) neighbors.push({ x: x + 1, y, dir: 'right', opp: 'left' });
+                if (y < h - 1 && !maze[y + 1][x].visited) neighbors.push({ x, y: y + 1, dir: 'bottom', opp: 'top' });
+                if (x > 0 && !maze[y][x - 1].visited) neighbors.push({ x: x - 1, y, dir: 'left', opp: 'right' });
+
+                if (neighbors.length > 0) {
+                    let next = neighbors[Math.floor(Math.random() * neighbors.length)];
+                    maze[current.y][current.x].walls[next.dir] = false;
+                    maze[next.y][next.x].walls[next.opp] = false;
+                    maze[next.y][next.x].visited = true;
+                    stack.push({ x: current.x, y: current.y });
+                    current = { x: next.x, y: next.y };
+                    visitedCount++;
+                } else if (stack.length > 0) {
+                    current = stack.pop();
+                } else {
+                    break;
+                }
+            }
+            // Entradas y salidas estándar
+            maze[0][0].walls.left = false;
+            maze[h - 1][w - 1].walls.right = false;
+            return maze;
+        }
+
+        function processAndRender() {
+            const container = document.getElementById('preview-list');
+            container.innerHTML = '';
+
+            appData.exercises.forEach((ex, idx) => {
+                const mazeData = generateMaze(ex.gridWidth, ex.gridHeight);
+                ex.calculatedMaze = mazeData;
+
+                const sheet = document.createElement('div');
+                sheet.className = "bg-white w-[210mm] min-h-[297mm] p-12 shadow-2xl flex flex-col mb-8 relative shrink-0 border border-gray-100";
+                
+                const startImg = imageMap[ex.startImgId] || 'https://via.placeholder.com/150?text=Inicio';
+                const endImg = imageMap[ex.endImgId] || 'https://via.placeholder.com/150?text=Fin';
+
+                let mazeHtml = `
+                <div class="relative mx-auto mt-20 mb-20" style="width: 480px; height: 480px;">
+                    <!-- Inicio Imagen -->
+                    <div class="absolute -left-52 top-[-20px] w-44 h-44 flex flex-col items-center">
+                        <img src="${startImg}" class="w-full h-full object-contain">
+                    </div>
+                    
+                    <!-- Flecha Entrada (Fuera del laberinto, apuntando a la izquierda) -->
+                    <div class="absolute -left-12 top-2 flex flex-col items-center z-10">
+                        <svg class="w-10 h-10 text-emerald-500 arrow-guide" fill="currentColor" viewBox="0 0 20 20" style="transform: rotate(90deg)">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-[9px] font-bold text-emerald-600 tracking-tighter mt-1">INICIO</span>
+                    </div>
+                    
+                    <div class="maze-container grid w-full h-full" style="grid-template-columns: repeat(${ex.gridWidth}, 1fr); grid-template-rows: repeat(${ex.gridHeight}, 1fr);">`;
+                
+                for(let r=0; r < ex.gridHeight; r++) {
+                    for(let c=0; c < ex.gridWidth; c++) {
+                        const cell = mazeData[r][c];
+                        const classes = [
+                            'maze-cell',
+                            cell.walls.top ? 'wall-top' : '',
+                            cell.walls.right ? 'wall-right' : '',
+                            cell.walls.bottom ? 'wall-bottom' : '',
+                            cell.walls.left ? 'wall-left' : ''
+                        ].join(' ');
+                        mazeHtml += `<div class="${classes}"></div>`;
+                    }
+                }
+                
+                mazeHtml += `
+                    </div>
+
+                    <!-- Flecha Salida (Fuera del laberinto, apuntando a la derecha) -->
+                    <div class="absolute -right-12 bottom-2 flex flex-col items-center z-10">
+                        <svg class="w-10 h-10 text-rose-500 arrow-guide" fill="currentColor" viewBox="0 0 20 20" style="transform: rotate(90deg)">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-[9px] font-bold text-rose-600 tracking-tighter mt-1">META</span>
+                    </div>
+
+                    <!-- Fin Imagen -->
+                    <div class="absolute -right-52 bottom-[-20px] w-44 h-44 flex flex-col items-center">
+                        <img src="${endImg}" class="w-full h-full object-contain">
+                    </div>
+                </div>`;
+
+                sheet.innerHTML = `
+                    <div class="border-b-4 border-indigo-600 pb-4 mb-6 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-3xl font-black text-indigo-900 tracking-tight">${ex.title}</h2>
+                            <p class="text-indigo-500 font-bold text-sm">${ex.instruction}</p>
+                        </div>
+                        <div class="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold">RETO ${idx+1}</div>
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col justify-center items-center">
+                        ${mazeHtml}
+                    </div>
+
+                    <div class="mt-8 p-4 border-t-2 border-dashed border-indigo-100 flex justify-between items-center text-[11px] text-gray-400 font-bold italic">
+                        <span>NOMBRE: _________________________________________________</span>
+                        <span>FECHA: ____ / ____ / ________</span>
+                    </div>
+                `;
+                container.appendChild(sheet);
+            });
+            lucide.createIcons();
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = 210;
+            const pageHeight = 297;
+
+            for(let i=0; i < appData.exercises.length; i++) {
+                const ex = appData.exercises[i];
+                if (i > 0) doc.addPage();
+                
+                doc.setFillColor(255, 255, 255);
+                doc.rect(0, 0, pageWidth, pageHeight, 'F');
+
+                // Cabecera de datos
+                doc.setDrawColor(220);
+                doc.setLineWidth(0.5);
+                doc.line(15, 18, 195, 18);
+                doc.setFontSize(10);
+                doc.setTextColor(100);
+                doc.text("Nombre: __________________________________________", 15, 26);
+                doc.text("Fecha: ___/___/___", 160, 26);
+
+                // Título
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(26);
+                doc.setTextColor(30, 27, 75);
+                doc.text(ex.title.toUpperCase(), pageWidth/2, 48, { align: 'center' });
+                
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(120);
+                doc.text(ex.instruction, pageWidth/2, 56, { align: 'center' });
+
+                // Laberinto
+                const mazeSize = 120;
+                const startX = (pageWidth - mazeSize) / 2;
+                const startY = 85;
+                const cellW = mazeSize / ex.gridWidth;
+                const cellH = mazeSize / ex.gridHeight;
+
+                doc.setDrawColor(51, 65, 85);
+                doc.setLineWidth(0.8);
+
+                for(let r=0; r < ex.gridHeight; r++) {
+                    for(let c=0; c < ex.gridWidth; c++) {
+                        const cell = ex.calculatedMaze[r][c];
+                        const x = startX + (c * cellW);
+                        const y = startY + (r * cellH);
+
+                        if(cell.walls.top) doc.line(x, y, x + cellW, y);
+                        if(cell.walls.right) doc.line(x + cellW, y, x + cellW, y + cellH);
+                        if(cell.walls.bottom) doc.line(x, y + cellH, x + cellW, y + cellH);
+                        if(cell.walls.left) doc.line(x, y, x, y + cellH);
+                    }
+                }
+
+                const imgSize = 45;
+                
+                // --- INICIO ---
+                if(imageMap[ex.startImgId]) {
+                    doc.addImage(imageMap[ex.startImgId], 'PNG', startX - imgSize - 5, startY - 10, imgSize, imgSize);
+                }
+                
+                // Flecha Verde (Entrada) - Apunta a la derecha
+                doc.setDrawColor(16, 185, 129);
+                doc.setFillColor(16, 185, 129);
+                const arrowX = startX - 7;
+                const arrowY = startY + (cellH / 2);
+                doc.triangle(arrowX, arrowY, arrowX - 4, arrowY - 3, arrowX - 4, arrowY + 3, 'F');
+                doc.setLineWidth(1);
+                doc.line(arrowX - 8, arrowY, arrowX - 4, arrowY);
+                doc.setFontSize(7);
+                doc.text("INICIO", arrowX - 6, arrowY - 5, { align: 'center' });
+
+                // --- FIN ---
+                if(imageMap[ex.endImgId]) {
+                    doc.addImage(imageMap[ex.endImgId], 'PNG', startX + mazeSize + 5, startY + mazeSize - imgSize + 10, imgSize, imgSize);
+                }
+
+                // Flecha Roja (Salida) - Apunta a la derecha
+                doc.setDrawColor(244, 63, 94);
+                doc.setFillColor(244, 63, 94);
+                const arrowEndX = startX + mazeSize + 10;
+                const arrowEndY = startY + mazeSize - (cellH / 2);
+                doc.triangle(arrowEndX, arrowEndY, arrowEndX - 4, arrowEndY - 3, arrowEndX - 4, arrowEndY + 3, 'F');
+                doc.setLineWidth(1);
+                doc.line(arrowEndX - 8, arrowEndY, arrowEndX - 4, arrowEndY);
+                doc.setFontSize(7);
+                doc.text("META", arrowEndX - 6, arrowEndY + 7, { align: 'center' });
+
+                // Marcas de agua y Footer
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(14);
+                doc.setTextColor(230, 230, 230);
+                const randomY_WM = Math.random() * (240 - 60) + 60;
+                doc.text(watermarkText, 8, randomY_WM, { angle: 90 });
+
+                doc.setFontSize(9);
+                doc.setTextColor(180, 180, 180);
+                const footerW = doc.getTextWidth(footerText);
+                const randomX_F = Math.random() * (pageWidth - footerW - 20) + 10;
+                doc.text(footerText, randomX_F, 285);
+            }
+
+            const pdfBlob = doc.output('blob');
+            const url = URL.createObjectURL(pdfBlob);
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
