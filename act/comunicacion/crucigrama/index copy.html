@@ -90,7 +90,7 @@
         </div>
         
         <h1 class="text-3xl font-black text-indigo-900 mb-2">Crucigrama con Fondo</h1>
-        <p class="text-indigo-600/70 font-medium mb-6">Pistas con imágenes y texto descriptivo</p>
+        <p class="text-indigo-600/70 font-medium mb-6">Pistas grandes y fondos personalizados</p>
 
         <div class="bg-white/80 backdrop-blur-sm p-6 rounded-[2rem] shadow-2xl border-4 border-white w-full max-w-3xl space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -103,89 +103,128 @@
             </div>
 
             <div class="text-left">
-                <label class="block text-xs font-bold text-indigo-900/60 ml-2 mb-1">Estructura JSON (Imagen fondo: img001)</label>
-                <textarea id="json-input-area" rows="8" class="w-full bg-indigo-50/50 border-2 border-indigo-100 rounded-xl px-4 py-3 font-mono text-xs outline-none scroll-hidden">
-                    {
+                <label class="block text-xs font-bold text-indigo-900/60 ml-2 mb-1">Estructura JSON (Palabras e Imagen de Fondo)</label>
+                <textarea id="json-input-area" rows="8" class="w-full bg-indigo-50/50 border-2 border-indigo-100 rounded-xl px-4 py-3 font-mono text-xs outline-none scroll-hidden">{
   "exercises": [
     {
-      "title": "Exploradores del Bosque",
-      "gridSize": 12,
+      "title": "Stitch en el Parque",
+      "gridSize": 10,
       "bgImageId": "img001",
       "words": [
-        { "word": "lobo", "imgId": "img002", "hint": "Aúlla en la noche" },
-        { "word": "ardilla", "imgId": "img003", "hint": "Guarda nueces en árboles" },
-        { "word": "ciervo", "imgId": "img004", "hint": "Tiene grandes cuernos" },
-        { "word": "zorro", "imgId": "img005", "hint": "Es astuto y veloz" },
-        { "word": "oso", "imgId": "img006", "hint": "Le gusta la miel" },
-        { "word": "puma", "imgId": "img007", "hint": "Felino fuerte y ágil" }
+        { "word": "correr", "imgId": "img002" },
+        { "word": "pelota", "imgId": "img003" },
+        { "word": "saltar", "imgId": "img004" },
+        { "word": "arbol", "imgId": "img005" },
+        { "word": "cometa", "imgId": "img006" },
+        { "word": "jugar", "imgId": "img007" },
+        { "word": "banco", "imgId": "img008" }
       ]
     },
     {
-      "title": "Aventura en el Mar",
-      "gridSize": 12,
-      "bgImageId": "img008",
+      "title": "Stitch en la Escuela",
+      "gridSize": 10,
+      "bgImageId": "img009",
       "words": [
-        { "word": "pez", "imgId": "img009", "hint": "Nada con aletas" },
-        { "word": "pulpo", "imgId": "img010", "hint": "Tiene ocho brazos" },
-        { "word": "tiburon", "imgId": "img011", "hint": "Gran pez con dientes filosos" },
-        { "word": "foca", "imgId": "img012", "hint": "Aplaude con sus aletas" },
-        { "word": "ballena", "imgId": "img013", "hint": "Es el animal más grande del mar" },
-        { "word": "cangrejo", "imgId": "img014", "hint": "Camina de lado en la arena" },
-        { "word": "medusa", "imgId": "img015", "hint": "Es transparente y flota" }
+        { "word": "leer", "imgId": "img010" },
+        { "word": "libro", "imgId": "img011" },
+        { "word": "lapiz", "imgId": "img012" },
+        { "word": "escribir", "imgId": "img013" },
+        { "word": "mochila", "imgId": "img014" },
+        { "word": "dibujar", "imgId": "img015" },
+        { "word": "pizarra", "imgId": "img016" },
+        { "word": "maestro", "imgId": "img017" }
       ]
     },
     {
-      "title": "Viaje por la Ciudad",
-      "gridSize": 12,
-      "bgImageId": "img016",
+      "title": "Stitch en la Playa",
+      "gridSize": 10,
+      "bgImageId": "img018",
       "words": [
-        { "word": "auto", "imgId": "img017", "hint": "Tiene cuatro ruedas" },
-        { "word": "avion", "imgId": "img018", "hint": "Vuela en el cielo" },
-        { "word": "tren", "imgId": "img019", "hint": "Viaja sobre rieles" },
-        { "word": "barco", "imgId": "img020", "hint": "Navega en el agua" },
-        { "word": "moto", "imgId": "img021", "hint": "Tiene dos ruedas" },
-        { "word": "puente", "imgId": "img022", "hint": "Sirve para cruzar el río" },
-        { "word": "torre", "imgId": "img023", "hint": "Es alta y se ve desde lejos" },
-        { "word": "plaza", "imgId": "img024", "hint": "Lugar para jugar y pasear" }
+        { "word": "surfear", "imgId": "img019" },
+        { "word": "tabla", "imgId": "img020" },
+        { "word": "nadar", "imgId": "img021" },
+        { "word": "arena", "imgId": "img022" },
+        { "word": "sombrero", "imgId": "img023" },
+        { "word": "beber", "imgId": "img024" },
+        { "word": "coco", "imgId": "img025" }
       ]
     },
     {
-      "title": "Sabores del Huerto",
-      "gridSize": 12,
-      "bgImageId": "img025",
+      "title": "Stitch en su Habitacion",
+      "gridSize": 10,
+      "bgImageId": "img026",
       "words": [
-        { "word": "manzana", "imgId": "img026", "hint": "Puede ser roja o verde" },
-        { "word": "pera", "imgId": "img027", "hint": "Es jugosa y suave" },
-        { "word": "uva", "imgId": "img028", "hint": "Crece en racimos" },
-        { "word": "melon", "imgId": "img029", "hint": "Es grande y fresco" },
-        { "word": "piña", "imgId": "img030", "hint": "Tiene corona y es tropical" },
-        { "word": "zanahoria", "imgId": "img031", "hint": "Es naranja y alargada" },
-        { "word": "tomate", "imgId": "img032", "hint": "Es rojo y jugoso" }
+        { "word": "dormir", "imgId": "img027" },
+        { "word": "cama", "imgId": "img028" },
+        { "word": "lampara", "imgId": "img029" },
+        { "word": "leer", "imgId": "img030" },
+        { "word": "libro", "imgId": "img031" },
+        { "word": "despertar", "imgId": "img032" },
+        { "word": "almohada", "imgId": "img033" }
       ]
     },
     {
-      "title": "Mundo Escolar",
-      "gridSize": 12,
-      "bgImageId": "img033",
+      "title": "Stitch Cocinero",
+      "gridSize": 10,
+      "bgImageId": "img034",
       "words": [
-        { "word": "libro", "imgId": "img034", "hint": "Tiene muchas páginas" },
-        { "word": "lapiz", "imgId": "img035", "hint": "Sirve para escribir" },
-        { "word": "regla", "imgId": "img036", "hint": "Sirve para medir" },
-        { "word": "mochila", "imgId": "img037", "hint": "Lleva útiles escolares" },
-        { "word": "cuaderno", "imgId": "img038", "hint": "Se usa para escribir tareas" },
-        { "word": "tijera", "imgId": "img039", "hint": "Sirve para cortar papel" }
+        { "word": "cocinar", "imgId": "img035" },
+        { "word": "comer", "imgId": "img036" },
+        { "word": "pizza", "imgId": "img037" },
+        { "word": "jugo", "imgId": "img038" },
+        { "word": "cuchara", "imgId": "img039" },
+        { "word": "plato", "imgId": "img040" },
+        { "word": "beber", "imgId": "img041" },
+        { "word": "mesa", "imgId": "img042" }
       ]
     }
   ]
 }
 
-dame todos los prompts de imagenes separados por newline las imagenes de los bigimageid deben ser en el centro vacio y en los contornos el dibujo sobre el tema... en este caso quiero que sea de un personaje similar a snoopy pero que no sea el mismo para evitar temas de derecho de autor
+ahora dame los prompts de imagen de todas las imagenes incluyendo sus bg... separadas por newline ya sabes que el tema es de STITCH 
 
-dame todas los prompts del json completo
+img001: Stitch en un parque infantil colorido, estilo ilustración infantil, Stitch en una esquina saludando, árboles, flores, pelota y cometa en las esquinas, centro limpio y vacío, composición con espacio negativo en el centro, colores vibrantes, estilo caricatura, alta calidad, sin texto
 
-ten en cuenta que en las imagenes de las words son el obejto o la accion o etc con el personaje que te indique... ejemplo si la palaba es moto entonces el personaje saldra en la moto.. si es correr pues el personaje saldra corriendo.. si es plaza pues el personaje saldra admirando una plaza y asi...
-las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el centro el personaje y otros adornos solo deberan ser al contorno de la imagen el centro siempre vacio de un color claro
-                </textarea>
+img002: Stitch corriendo feliz en un parque, movimiento dinámico, expresión alegre, estilo caricatura infantil, fondo simple, colores brillantes, personaje completo visible, sin texto
+
+img003: Stitch jugando con una pelota roja, sosteniendo la pelota con sonrisa, estilo ilustración infantil, fondo simple y limpio, colores suaves, sin texto
+
+img004: Stitch saltando en el aire con alegría, pose dinámica, estilo caricatura infantil, fondo minimalista, colores vibrantes, sin texto
+
+img005: Stitch abrazando un árbol amigable con cara feliz, estilo infantil, colores suaves, fondo simple, sin texto
+
+img006: Stitch volando una cometa de colores, mirando hacia arriba feliz, estilo caricatura infantil, fondo limpio, sin texto
+
+img007: Stitch jugando alegremente, brazos abiertos, pose divertida, estilo ilustración infantil, fondo simple, sin texto
+
+img008: Stitch sentado en un banco de parque, relajado y feliz, estilo caricatura infantil, fondo limpio, sin texto
+
+img009: Habitación escolar infantil con Stitch en una esquina, mochila, libros, lápices y pizarra en las esquinas, centro completamente vacío, espacio negativo en el centro, colores pastel, estilo caricatura infantil, sin texto
+
+img010: Stitch leyendo un libro con atención, sentado, expresión curiosa, estilo ilustración infantil, fondo simple, sin texto
+
+img011: Stitch sosteniendo un libro grande, sonriendo, estilo caricatura infantil, fondo limpio, sin texto
+
+img012: Stitch sosteniendo un lápiz gigante, listo para escribir, estilo infantil, fondo simple, sin texto
+
+img013: Stitch escribiendo en un cuaderno, concentrado, estilo caricatura infantil, fondo limpio, sin texto
+
+img014: Stitch usando una mochila colorida, listo para ir a la escuela, estilo infantil, fondo simple, sin texto
+
+img015: Stitch dibujando con crayones, feliz, estilo caricatura infantil, fondo limpio, sin texto
+
+img016: Stitch señalando una pizarra, pose de maestro, estilo infantil, fondo simple, sin texto
+
+img017: Stitch vestido como maestro con libro, sonriendo, estilo caricatura infantil, fondo limpio, sin texto
+
+img018: Playa tropical con Stitch en una esquina, palmeras, tabla de surf, sombrero y coco en las esquinas, centro vacío y limpio, estilo ilustración infantil, colores brillantes, sin texto
+
+img019: Stitch surfeando sobre una ola, feliz, estilo caricatura infantil, fondo simple, sin texto
+
+img020: Stitch sosteniendo una tabla de surf colorida, estilo infantil, fondo limpio, sin texto
+
+si te das cuenta primero la imagen principal backgorund que trate de tener el centro vacio y mas a los contornos luego sus imagenes como e el ejemplo recuerda que son maximo 8 imagenes aparete del background en cada ejercicio ahora quiero que hagas otro para: 
+</textarea>
             </div>
 
             <button onclick="startApp()" class="w-full bg-indigo-600 text-white font-black text-lg py-4 rounded-2xl shadow-xl hover:bg-indigo-700 transition flex items-center justify-center gap-3">
@@ -214,13 +253,13 @@ las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el cent
     </div>
 
     <script>
-    
+     
 
         let appData = null;
         let imageMap = {};
         let pdfTitle = "Crucigrama Mágico";
 
-      
+     
 
         document.getElementById('zip-input').onchange = (e) => {
             document.getElementById('zip-status').innerText = e.target.files[0]?.name || 'Imágenes (ZIP)';
@@ -241,6 +280,7 @@ las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el cent
                         if (!entry.dir) {
                             const ext = path.split('.').pop().toLowerCase();
                             const data = await entry.async("base64");
+                            // Corregido: eliminación de escapes innecesarios que causaban SyntaxError
                             const cleanName = path.split('/').pop().replace(/\.[^/.]+$/, "");
                             const mimeType = (ext === 'png') ? 'image/png' : 'image/jpeg';
                             imageMap[cleanName] = `data:${mimeType};base64,${data}`;
@@ -340,12 +380,11 @@ las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el cent
                 let cluesHtml = `<div class="grid grid-cols-4 gap-6">`;
                 placedWords.forEach(w => {
                     cluesHtml += `
-                        <div class="clue-card bg-white p-2 rounded-2xl border-2 border-indigo-50 shadow-sm flex flex-col items-center">
+                        <div class="clue-card bg-white p-2 rounded-2xl border-2 border-indigo-50 shadow-sm">
                             <div class="clue-badge">${w.id}</div>
                             <div class="aspect-square w-full flex items-center justify-center bg-slate-50 rounded-xl overflow-hidden p-1">
                                 ${imageMap[w.imgId] ? `<img src="${imageMap[w.imgId]}" class="max-w-full max-h-full object-contain">` : `<span class="text-xs text-slate-300 font-bold">${w.imgId}</span>`}
                             </div>
-                            <p class="mt-2 text-[10px] font-medium text-indigo-700 text-center leading-tight min-h-[2.4em]">${w.hint || ''}</p>
                         </div>`;
                 });
                 cluesHtml += `</div>`;
@@ -359,7 +398,7 @@ las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el cent
                         ${gridHtml}
                     </div>
                     <div class="mt-8 pt-8 border-t-2 border-dashed border-indigo-100">
-                        <h3 class="text-center font-black text-indigo-200 uppercase tracking-[0.4em] mb-4 text-sm">Pistas Visuales</h3>
+                        <h3 class="text-center font-black text-indigo-200 uppercase tracking-[0.4em] mb-6 text-sm">Pistas Visuales</h3>
                         ${cluesHtml}
                     </div>
                 `;
@@ -371,11 +410,6 @@ las imagenes que son de bgImagePrompt (solo esas) no deben tener nada en el cent
         async function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
-
-            const pageWidth = 210;
-const pageHeight = 297;
-const watermarkText = "FB: SUPER CURSOS TELGAM";
-const footerText = "FB: SUPER CURSOS TELGAM   www.narrion.site";
 
             for(let i=0; i<appData.exercises.length; i++) {
                 const ex = appData.exercises[i];
@@ -389,15 +423,17 @@ const footerText = "FB: SUPER CURSOS TELGAM   www.narrion.site";
                 doc.setTextColor(30, 27, 75);
                 doc.text(ex.title.toUpperCase(), 20, 25);
 
-                const gridAreaSize = 140;
+                const gridAreaSize = 130;
                 const startX = (210 - gridAreaSize) / 2;
-                const startY = 35;
+                const startY = 40;
 
-                // FONDO NORMAL (Sin opacidad)
                 if(imageMap[ex.bgImageId]) {
                     try {
                         const format = imageMap[ex.bgImageId].includes('png') ? 'PNG' : 'JPEG';
-                        doc.addImage(imageMap[ex.bgImageId], format, startX - 10, startY, gridAreaSize + 20, gridAreaSize);
+                        doc.saveGraphicsState();
+                        doc.setGState(new doc.GState({opacity: 0.3}));
+                        doc.addImage(imageMap[ex.bgImageId], format, startX, startY, gridAreaSize, gridAreaSize);
+                        doc.restoreGraphicsState();
                     } catch(e) { console.error("Error bg image:", e); }
                 } else {
                     doc.setFillColor(240, 244, 248);
@@ -427,19 +463,16 @@ const footerText = "FB: SUPER CURSOS TELGAM   www.narrion.site";
                     }
                 }
 
-                const cluesStartY = startY + gridAreaSize + 8;
-                const clueBoxSize = 40;
-                const gapX = 10;
-                const gapY = 15;
+                const cluesStartY = startY + gridAreaSize + 25;
+                const clueBoxSize = 32;
+                const gap = 8;
                 const cols = 4;
 
                 ex.calculatedWords.forEach((w, idx) => {
                     const col = idx % cols;
                     const row = Math.floor(idx / cols);
-                    const totalWidth = (cols * clueBoxSize) + ((cols - 1) * gapX);
-const startXCentered = (pageWidth - totalWidth) / 2;
-const x = startXCentered + (col * (clueBoxSize + gapX));
-                    const y = cluesStartY + (row * (clueBoxSize + gapY));
+                    const x = 30 + (col * (clueBoxSize + gap));
+                    const y = cluesStartY + (row * (clueBoxSize + gap));
 
                     doc.setDrawColor(220, 220, 220);
                     doc.setFillColor(255, 255, 255);
@@ -448,7 +481,7 @@ const x = startXCentered + (col * (clueBoxSize + gapX));
                     if(imageMap[w.imgId]) {
                         try {
                             const format = imageMap[w.imgId].includes('png') ? 'PNG' : 'JPEG';
-                            doc.addImage(imageMap[w.imgId], format, x + 1, y + 1, clueBoxSize - 2, clueBoxSize - 2);
+                            doc.addImage(imageMap[w.imgId], format, x + 2, y + 2, clueBoxSize - 4, clueBoxSize - 4);
                         } catch(e) {}
                     }
                     
@@ -457,62 +490,11 @@ const x = startXCentered + (col * (clueBoxSize + gapX));
                     doc.setTextColor(255, 255, 255);
                     doc.setFontSize(9);
                     doc.text(w.id.toString(), x + 1.5, y + 3, { align: 'center' });
-
-                    if(w.hint) {
-    doc.setTextColor(60, 60, 120);
-    doc.setFont("helvetica", "bold"); // más fuerte visualmente
-    
-    // ⬇ AUMENTAMOS TAMAÑO
-    doc.setFontSize(10); 
-    
-    const splitHint = doc.splitTextToSize(w.hint, clueBoxSize + 5);
-    
-    doc.text(
-        splitHint, 
-        x + (clueBoxSize / 2), 
-        y + clueBoxSize + 6, 
-        { align: 'center' }
-    );
-}
                 });
 
                 doc.setFontSize(8);
                 doc.setTextColor(180);
-                doc.text(`${pdfTitle.toUpperCase()} - RETO ${i+1}`, 105, 292, { align: 'center' });
-
-                // ==========================
-// MARCA DE AGUA RANDOM
-// ==========================
-
-// Marca vertical random
-doc.setFont("helvetica", "bold");
-doc.setFontSize(14);
-doc.setTextColor(210, 210, 210);
-
-const textWidth = doc.getTextWidth(watermarkText);
-const visualHeight = textWidth;
-
-const margin = 30;
-const minY = margin + visualHeight;
-const maxY = pageHeight - margin;
-
-const randomY = Math.random() * (maxY - minY) + minY;
-
-doc.text(watermarkText, 5, randomY, { angle: 90 });
-
-// Footer justo debajo del crucigrama, random en X
-doc.setFontSize(9);
-doc.setTextColor(140, 140, 140);
-
-const footerWidth = doc.getTextWidth(footerText);
-const minX = 10;
-const maxX = pageWidth - footerWidth - 10;
-const randomX = Math.random() * (maxX - minX) + minX;
-
-// Posición vertical justo debajo del crucigrama
-doc.text(footerText, randomX, startY + gridAreaSize + 4); // 4mm debajo del crucigrama
-
-
+                doc.text(`${pdfTitle.toUpperCase()} - RETO ${i+1}`, 105, 288, { align: 'center' });
             }
 
             const pdfBlob = doc.output('blob');
